@@ -642,7 +642,7 @@
         <div class="final-letter-card" id="finalLetterCard">
             <h2 class="final-title"> HAPPY BIRTHDAY </h2>
             <p class="final-text" id="birthdayMessage">
-                [ مكان الرسالة ]
+                [ اكتبـي رسالـة يـوم ميـلاده الفخمة هنـا بالقصيـد أو الكلام اللطيف الخاص بكما.. الكود سيعرضها هنا بكامل تنسيقها ونزول أسطرها الفخم! ]
             </p>
         </div>
     </div>
@@ -690,7 +690,7 @@
         const wordSpeed = 250; 
         let lastCheckpointNode = "node1"; 
         let prankActive = false;
-        const prankDuration = 40000; 
+        const prankDuration = 10000; // 👈 غيرت الوقت لـ 10 ثواني عشان التجربة السريعة بالجوال، غيريها لـ 40000 براحتك
 
         function initCutscene() {
             flash.classList.add('active');
@@ -909,7 +909,7 @@
                 options: [{ text: "التالي", next: "node_3C2" }]
             },
             node_3C2: {
-                speaker: "me", mood: "😒", text: "على زق",
+                speaker: "😒", text: "على زق",
                 options: [{ text: "التالي", next: "node_3C3" }]
             },
             node_3C3: {
@@ -925,7 +925,7 @@
                 options: [{ text: "التالي", next: "node_3D3" }]
             },
             node_3D3: {
-                speaker: "him", mood: "😐", text: "مو قصدي أزعلك ياقلبي، علميني كيف اصلح الموقف",
+                speaker: "him", mood: "😐", text: "مو قصدي أزعلك ياقلبي, علميني كيف اصلح الموقف",
                 options: [{ text: "التالي", next: "node_3D4" }]
             },
             node_3D4: {
@@ -998,7 +998,7 @@
                 options: [{ text: "التالي", next: "node_pre_boss3" }]
             },
             node_pre_boss3: {
-                speaker: "him", mood: "😐", text: "يعني تبيني اكون موجود بس؟  ",
+                speaker: "him", mood: "😐", text: "يعني تبيني اكون موجود بس؟ ماتعيشين بدوني اعترفي",
                 options: [{ text: "التالي", next: "node_pre_boss4" }]
             },
             node_pre_boss4: {
@@ -1160,7 +1160,7 @@
                 options: [{ text: "التالي", next: "node_bB3" }]
             },
             node_bB3: {
-                speaker: "him", mood: "😐", text: "عادي ازعلك واشتاقلك وين المشكله",
+                speaker: "him", mood: "😐", text: "عدي ازعلك واشتاقلك وين المشكله",
                 options: [{ text: "التالي", next: "node_bB4" }]
             },
             node_bB4: {
@@ -1346,7 +1346,7 @@
             const winBtn = document.createElement('button');
             winBtn.className = "option-button";
             winBtn.style.textAlign = "center";
-            winBtn.innerText = "استلام الهدية ";
+            winBtn.innerText = "استلام الهدية 🎁";
             winBtn.addEventListener('click', () => {
                 cinematicKissContainer.style.opacity = '0';
                 cinematicKissContainer.style.display = 'none';
@@ -1399,10 +1399,17 @@
             yesBtn.style.top = randomY + "px";
         }
 
-        yesBtn.addEventListener('mouseenter', moveButtonRandomly);
+        // الحوم بالماوس (للكمبيوتر فقط)
+        yesBtn.addEventListener('mouseenter', () => {
+            if (prankActive) moveButtonRandomly();
+        });
+
+        // حدث اللمس للجوال (ينحش الزر فوراً بمجرد اللمس ومستحيل يعلق)
         yesBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            moveButtonRandomly();
+            if (prankActive) {
+                e.preventDefault(); 
+                moveButtonRandomly();
+            }
         });
 
         noBtn.addEventListener('mouseenter', () => {
@@ -1414,6 +1421,7 @@
         });
         noBtn.addEventListener('click', (e) => { e.preventDefault(); });
 
+        // ضغط زر الـ YES النهائي (يعمل على الكمبيوتر والجوال كـ click عادي)
         yesBtn.addEventListener('click', () => {
             if (!prankActive) {
                 prankSection.style.display = 'none';
