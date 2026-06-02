@@ -7,7 +7,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-        /* تعريف ملف الخط العربي الخاص بكِ */
         @font-face {
             font-family: 'CustomArabFont';
             src: url('arab-font.ttf') format('truetype');
@@ -24,7 +23,7 @@
         }
 
         body {
-            background-color: #ffe6f0; /* خلفية أساسية فاتحة وكيوت */
+            background-color: #ffe6f0;
             height: 100vh;
             overflow: hidden;
             display: flex;
@@ -34,7 +33,7 @@
             font-family: 'Press Start 2P', monospace;
         }
 
-        /* --- 1. واجهة اللعبة الرئيسية --- */
+        /* ══ MAIN MENU ══ */
         .main-menu {
             position: absolute;
             width: 100%;
@@ -42,97 +41,178 @@
             background: url('background.png') no-repeat center center;
             background-size: cover;
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             align-items: center;
             z-index: 5;
             transition: opacity 1s ease;
         }
 
+        /* طبقة تعتيم فوق الخلفية */
+        .main-menu::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 220, 235, 0.45);
+            z-index: 0;
+        }
+
         .menu-container {
+            position: relative;
+            z-index: 1;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px; 
-            max-width: 650px; 
-            width: 90%;
-            padding: 50px 40px; 
-            background: rgba(255, 255, 255, 0.85); 
-            border: 6px solid #ff9ebb; 
-            border-radius: 32px;
-            box-shadow: 0 12px 0 #e67e9c, 0 15px 30px rgba(255, 158, 187, 0.3);
+            gap: 22px;
+            max-width: 560px;
+            width: 88%;
+            padding: 44px 36px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 5px solid #ff9ebb;
+            border-radius: 28px;
+            box-shadow: 0 10px 0 #e67e9c, 0 14px 40px rgba(255, 158, 187, 0.35),
+                        inset 0 0 0 2px rgba(255,255,255,0.6);
+            backdrop-filter: blur(6px);
+        }
+
+        /* ديكور نجوم بكسل في الزوايا */
+        .menu-container::before,
+        .menu-container::after {
+            content: "✦";
+            position: absolute;
+            font-family: monospace;
+            color: #ff9ebb;
+            font-size: 18px;
+            animation: twinkle 1.5s infinite alternate;
+        }
+        .menu-container::before { top: 14px; left: 18px; }
+        .menu-container::after  { bottom: 14px; right: 18px; animation-delay: 0.7s; }
+        @keyframes twinkle { 0%{opacity:0.3;transform:scale(0.8);} 100%{opacity:1;transform:scale(1.1);} }
+
+        /* لوجو بكسل آرت صغير */
+        .pixel-logo {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+        .pixel-heart {
+            width: 14px; height: 14px;
+            background: #ff608d;
+            clip-path: polygon(25% 0%,75% 0%,100% 25%,100% 50%,50% 100%,0% 50%,0% 25%);
+            animation: heartBeat 0.7s infinite alternate;
+        }
+        .pixel-heart:nth-child(2) { animation-delay: 0.2s; background: #ff9ebb; }
+        .pixel-heart:nth-child(3) { animation-delay: 0.4s; }
+
+        .title-top {
+            font-size: 11px;
+            color: #ff9ebb;
+            letter-spacing: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
         .title {
-            font-size: 38px; 
+            font-size: clamp(22px, 5vw, 36px);
             font-weight: bold;
             text-transform: uppercase;
-            line-height: 1.2;
+            line-height: 1.25;
             letter-spacing: -1px;
-            white-space: nowrap;
-            background: linear-gradient(180deg, #ffccd8 0%, #ff7da1 100%);
+            background: linear-gradient(180deg, #ffccd8 0%, #ff5e8f 60%, #ff3b73 100%);
             -webkit-background-clip: text;
-            -webkit-background-fill-color: transparent;
-            text-shadow: 4px 4px 0px #ff3b73;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(3px 3px 0px rgba(255,59,115,0.4));
         }
 
         .subtitle {
-            font-size: 13px;
-            color: #ff658d;
-            letter-spacing: 2px;
-            margin-top: -5px;
-            margin-bottom: 15px;
+            font-size: clamp(9px, 2vw, 12px);
+            color: #ff9ebb;
+            letter-spacing: 3px;
             font-weight: bold;
+        }
+
+        /* شريط فاصل بكسل */
+        .pixel-divider {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+        }
+        .pixel-divider::before,
+        .pixel-divider::after {
+            content: "";
+            flex: 1;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, #ff9ebb 0px, #ff9ebb 6px, transparent 6px, transparent 10px);
+        }
+        .pixel-divider span {
+            font-size: 14px;
+            color: #ff608d;
         }
 
         .press-enter-btn {
             background: linear-gradient(180deg, #ff9ebb 0%, #ff608d 100%);
-            border: 5px solid #ffffff; 
+            border: 4px solid #ffffff;
             color: #ffffff;
-            font-size: 18px;
+            font-size: clamp(13px, 2.5vw, 17px);
             font-weight: bold;
-            padding: 16px 45px;
+            padding: 15px 40px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             outline: none;
             font-family: 'Press Start 2P', monospace;
-            box-shadow: 0 8px 0 #c93b63, 0 5px 15px rgba(255, 96, 141, 0.4);
-            border-radius: 40px; 
+            box-shadow: 0 7px 0 #c93b63, 0 5px 18px rgba(255, 96, 141, 0.4);
+            border-radius: 40px;
             transition: all 0.1s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .press-enter-btn:hover { 
+        /* تأثير لمعة على الزر */
+        .press-enter-btn::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -60%;
+            width: 40%; height: 100%;
+            background: rgba(255,255,255,0.25);
+            transform: skewX(-20deg);
+            animation: shimmer 2.5s infinite;
+        }
+        @keyframes shimmer { 0%{left:-60%;} 100%{left:130%;} }
+
+        .press-enter-btn:hover {
             background: linear-gradient(180deg, #ffb5cb 0%, #ff7099 100%);
             transform: translateY(2px);
-            box-shadow: 0 6px 0 #c93b63, 0 5px 15px rgba(255, 96, 141, 0.4);
+            box-shadow: 0 5px 0 #c93b63, 0 5px 12px rgba(255, 96, 141, 0.4);
         }
-        
         .press-enter-btn:active {
-            transform: translateY(8px);
+            transform: translateY(7px);
             box-shadow: 0 0px 0 #c93b63;
         }
 
-        .btn-heart { 
-            color: #ffffff; 
-            font-size: 18px; 
+        .btn-heart {
+            color: #ffffff;
+            font-size: 16px;
             animation: heartBeat 0.6s infinite alternate;
         }
-        
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.25); }
+        @keyframes heartBeat { 0%{transform:scale(1);} 100%{transform:scale(1.25);} }
+
+        .version-tag {
+            font-size: 8px;
+            color: #ffb5cb;
+            letter-spacing: 1px;
         }
 
-        /* --- 2. شاشة الـ Cutscene --- */
+        /* ══ CUTSCENE ══ */
         .cutscene-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #fff0f5; 
+            background-color: #fff0f5;
             z-index: 10;
-            display: none; 
+            display: none;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -142,21 +222,20 @@
 
         .cutscene-text {
             font-family: 'CustomArabFont', sans-serif;
-            font-size: 34px; 
+            font-size: clamp(22px, 4vw, 34px);
             line-height: 1.8;
             text-align: center;
             color: #ff4071;
             max-width: 80%;
             display: none;
-            direction: rtl; 
+            direction: rtl;
             white-space: pre-line;
             text-shadow: 1px 1px 0px #fff;
         }
 
         .telegram-chat {
-            width: 360px;
-            max-width: 95%;
-            background-color: #ffffff; 
+            width: min(360px, 95%);
+            background-color: #ffffff;
             border: 4px solid #ff9ebb;
             border-radius: 16px;
             padding: 18px;
@@ -167,15 +246,13 @@
             transition: opacity 1s ease;
             margin-top: 20px;
             box-shadow: 0 8px 0 #ffccd8;
-            image-rendering: -webkit-optimize-contrast;
-            image-rendering: crisp-edges;
         }
 
         .tg-message {
             max-width: 85%;
             padding: 10px 14px;
             border-radius: 12px;
-            font-size: 12px;
+            font-size: clamp(11px, 2vw, 13px);
             line-height: 1.4;
         }
 
@@ -185,8 +262,8 @@
             color: #ff4071;
             border: 2px dashed #ff4071;
             text-align: center;
-            font-size: 11px;
-            width: 100%; 
+            font-size: clamp(10px, 2vw, 12px);
+            width: 100%;
             font-weight: bold;
             padding: 10px;
             border-radius: 8px;
@@ -210,7 +287,7 @@
 
         .animal-title {
             font-family: 'CustomArabFont', sans-serif;
-            font-size: 56px;
+            font-size: clamp(36px, 8vw, 56px);
             color: #ff3b73;
             text-align: center;
             display: none;
@@ -228,16 +305,16 @@
             pointer-events: none;
         }
         .flash-overlay.active { animation: flash-hit 0.15s ease-out; }
-        @keyframes flash-hit { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+        @keyframes flash-hit { 0%{opacity:0;} 50%{opacity:1;} 100%{opacity:0;} }
 
         .glitch-active { animation: screen-glitch 0.3s infinite; }
         @keyframes screen-glitch {
-            0% { transform: translate(0); background-color: #fff0f5; }
-            50% { transform: translate(2px, -2px); background-color: #ffe6f0; }
-            100% { transform: translate(0); background-color: #fff0f5; }
+            0%{transform:translate(0);background-color:#fff0f5;}
+            50%{transform:translate(2px,-2px);background-color:#ffe6f0;}
+            100%{transform:translate(0);background-color:#fff0f5;}
         }
 
-        /* --- 3. شاشة الجيم بلاي --- */
+        /* ══ GAMEPLAY ══ */
         .gameplay-screen {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -245,60 +322,57 @@
             z-index: 20;
             display: none;
             flex-direction: column;
-            justify-content: space-between; 
+            justify-content: space-between;
             align-items: center;
-            padding: 30px 20px 40px 20px;
+            padding: clamp(10px, 2vh, 30px) 20px clamp(16px, 3vh, 40px);
         }
 
         .gameplay-screen::before {
             content: "";
             position: absolute;
-            top:0; left:0; width:100%; height:100%;
-            background-image: linear-gradient(rgba(255, 96, 141, 0.08) 2px, transparent 2px),
-                              linear-gradient(90deg, rgba(255, 96, 141, 0.08) 2px, transparent 2px);
+            inset: 0;
+            background-image: linear-gradient(rgba(255,96,141,0.07) 2px, transparent 2px),
+                              linear-gradient(90deg, rgba(255,96,141,0.07) 2px, transparent 2px);
             background-size: 30px 30px;
             pointer-events: none;
             z-index: 1;
         }
 
         .stage-area {
-            flex-grow: 1;
+            flex-shrink: 0;
             width: 90%;
             max-width: 850px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding-bottom: 20px;
+            padding-bottom: clamp(8px, 2vh, 20px);
             z-index: 2;
         }
 
-        /* ✨ مشهد البوسنة السينمائي ✨ */
+        /* ══ CINEMATIC KISS ══ */
         .cinematic-kiss-container {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(180deg, #ffeef4 0%, #ffcbdc 100%);
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 30px;
-            z-index: 80; 
+            gap: 24px;
+            z-index: 80;
             opacity: 0;
             transition: opacity 0.8s ease;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
         .cinematic-kiss-container img {
             max-width: 90%;
-            max-height: 65vh;
+            max-height: 60vh;
             object-fit: contain;
-            filter: drop-shadow(0 10px 25px rgba(255, 96, 141, 0.3));
-            image-rendering: -webkit-optimize-contrast;
+            filter: drop-shadow(0 10px 25px rgba(255,96,141,0.3));
             image-rendering: crisp-edges;
         }
 
-        /* زر استلام الهدية أسفل صورة البوسنة مباشرة */
         .kiss-action-container {
             width: 100%;
             display: flex;
@@ -310,89 +384,80 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: clamp(8px, 1.5vh, 15px);
             opacity: 0.5;
             transform: scale(0.9);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
         .avatar-box.active {
             opacity: 1;
-            transform: scale(1.08);
-            filter: drop-shadow(0 0 20px rgba(255, 112, 153, 0.5));
+            transform: scale(1.06);
+            filter: drop-shadow(0 0 18px rgba(255,112,153,0.5));
         }
 
         .avatar-icon {
-            width: 170px; 
-            height: 230px;
-            border: 5px solid #ff9ebb;
-            border-radius: 24px;
+            width: clamp(90px, 14vw, 170px);
+            height: clamp(120px, 19vw, 230px);
+            border: 4px solid #ff9ebb;
+            border-radius: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #ffffff 0%, #fff0f5 100%);
-            box-shadow: 0 10px 0 #f0a3b8, inset 0 0 15px rgba(255,158,187,0.2);
-            overflow: hidden; 
-            position: relative;
+            box-shadow: 0 8px 0 #f0a3b8, inset 0 0 12px rgba(255,158,187,0.2);
+            overflow: hidden;
         }
-        
         .avatar-icon img {
-            width: 90%;
-            height: 90%;
+            width: 90%; height: 90%;
             object-fit: contain;
-            image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
         }
-        
-        .avatar-box.him .avatar-icon { border-color: #ff7da1; box-shadow: 0 10px 0 #e6678d; }
-        .avatar-box.me .avatar-icon { border-color: #ffb2d9; box-shadow: 0 10px 0 #e099be; }
+        .avatar-box.him .avatar-icon { border-color: #ff7da1; box-shadow: 0 8px 0 #e6678d; }
+        .avatar-box.me  .avatar-icon { border-color: #ffb2d9; box-shadow: 0 8px 0 #e099be; }
 
         .avatar-name {
             font-family: 'CustomArabFont', sans-serif;
             color: #ffffff;
-            font-size: 22px;
+            font-size: clamp(14px, 2.5vw, 22px);
             background: #ff7da1;
-            padding: 6px 20px;
+            padding: 5px 16px;
             border-radius: 25px;
             border: 3px solid #ffffff;
             box-shadow: 0 4px 0 #e6678d;
         }
 
+        /* ══ DIALOGUE ══ */
         .dialogue-wrapper {
-            width: 92%;
-            max-width: 800px;
-            height: 240px; 
-            background-color: rgba(255, 255, 255, 0.95);
+            width: 94%;
+            max-width: 820px;
+            flex-shrink: 0;
+            background-color: rgba(255,255,255,0.95);
             backdrop-filter: blur(8px);
-            border: 5px solid #ff7da1;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 12px 0 #e6678d, 0 10px 25px rgba(255, 125, 161, 0.2);
+            border: 4px solid #ff7da1;
+            border-radius: 20px;
+            padding: clamp(12px, 2vw, 22px);
+            box-shadow: 0 10px 0 #e6678d, 0 8px 20px rgba(255,125,161,0.2);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
+            gap: 10px;
             z-index: 4;
         }
 
         .dialogue-text {
             font-family: 'CustomArabFont', sans-serif;
-            font-size: 28px;
+            font-size: clamp(18px, 3.5vw, 28px);
             line-height: 1.5;
             color: #ff3b73;
             direction: rtl;
             overflow-y: auto;
-            flex-grow: 1;
-            margin-bottom: 10px;
+            max-height: clamp(70px, 15vh, 120px);
         }
 
         .options-container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
-            max-height: 110px;
-            overflow-y: auto;
         }
         .options-container.grid-2 {
             grid-template-columns: 1fr 1fr;
@@ -401,25 +466,25 @@
         .option-button {
             font-family: 'CustomArabFont', sans-serif;
             background: linear-gradient(180deg, #ff9ebb 0%, #ff608d 100%);
-            border: 4px solid #ffffff; 
+            border: 3px solid #ffffff;
             color: #ffffff;
-            padding: 10px 22px;
-            font-size: 22px;
+            padding: clamp(7px, 1.2vh, 11px) 18px;
+            font-size: clamp(16px, 3vw, 22px);
             cursor: pointer;
             text-align: right;
             direction: rtl;
-            border-radius: 16px;
+            border-radius: 14px;
             transition: all 0.15s ease;
-            box-shadow: 0 5px 0 #c93b63;
+            box-shadow: 0 4px 0 #c93b63;
             font-weight: bold;
         }
         .option-button:hover {
             background: linear-gradient(180deg, #ffb5cb 0%, #ff7099 100%);
             transform: translateY(-2px);
-            box-shadow: 0 7px 0 #c93b63;
+            box-shadow: 0 6px 0 #c93b63;
         }
 
-        /* شاشات النهايات */
+        /* ══ GAME OVER ══ */
         .game-over-screen, .ending-screen {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -429,239 +494,140 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: clamp(16px, 3vh, 30px);
             padding: 20px;
         }
 
         .game-over-title {
             font-family: 'CustomArabFont', sans-serif;
             color: #ff3b73;
-            font-size: 42px;
+            font-size: clamp(26px, 5vw, 42px);
             text-align: center;
             direction: rtl;
             text-shadow: 2px 2px 0px #fff;
         }
-
         .game-over-sub {
             font-family: 'Press Start 2P', monospace;
             color: #ff9ebb;
-            font-size: 16px;
+            font-size: clamp(12px, 2vw, 16px);
         }
-
         .retry-button {
             font-family: 'CustomArabFont', sans-serif;
             background: #ff608d;
             color: #fff;
             border: 4px solid #fff;
             padding: 12px 30px;
-            font-size: 24px;
+            font-size: clamp(18px, 3vw, 24px);
             cursor: pointer;
             border-radius: 12px;
             box-shadow: 0 5px 0 #c93b63;
             font-weight: bold;
         }
 
+        /* ══ ENDING / PRANK ══ */
         .prank-title {
             font-family: 'CustomArabFont', sans-serif;
-            font-size: 38px;
+            font-size: clamp(22px, 4vw, 38px);
             color: #ff4071;
-            margin-bottom: 25px;
             direction: rtl;
             text-align: center;
             line-height: 1.5;
             animation: pulse 1s infinite alternate;
         }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.03); }
-        }
+        @keyframes pulse { 0%{transform:scale(1);} 100%{transform:scale(1.03);} }
 
         .prank-btn-container {
             position: relative;
-            width: 440px;
-            max-width: 100%;
-            height: 190px;
-            display: flex;
-            flex-direction: row; 
-            justify-content: center;
-            align-items: center;
-            gap: 30px; 
+            width: min(440px, 92%);
+            height: 160px;
             background: #ffffff;
-            border: 5px solid #ff9ebb;
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 10px 0 #ffccd8;
+            border: 4px solid #ff9ebb;
+            border-radius: 20px;
+            box-shadow: 0 8px 0 #ffccd8;
+            overflow: hidden;
         }
 
         .gift-btn {
             font-family: 'Press Start 2P', monospace;
-            width: 140px;
-            padding: 14px 0;
-            font-size: 16px;
+            width: clamp(90px, 22vw, 140px);
+            padding: 12px 0;
+            font-size: clamp(12px, 2.5vw, 16px);
             cursor: pointer;
             border-radius: 12px;
             border: 4px solid #ffffff;
-            box-shadow: 0 6px 0 #c93b63;
             font-weight: bold;
         }
-
         .gift-btn.yes {
             background: linear-gradient(180deg, #ff9ebb 0%, #ff608d 100%);
             color: white;
-            position: absolute; 
-            left: 50px; 
+            box-shadow: 0 5px 0 #c93b63;
+            position: absolute;
+            left: 30px; top: 50%;
+            transform: translateY(-50%);
             z-index: 50;
         }
-        
         .gift-btn.no {
             background: linear-gradient(180deg, #e2b2c8 0%, #b57c99 100%);
             color: #ffffff;
+            box-shadow: 0 5px 0 #7a4b64;
             position: absolute;
-            right: 50px; 
+            right: 30px; top: 50%;
+            transform: translateY(-50%);
             z-index: 40;
-            box-shadow: 0 6px 0 #7a4b64;
         }
 
+        /* ══ FINAL LETTER ══ */
         .final-letter-card {
-            max-width: 680px;
-            width: 92%;
+            max-width: min(600px, 92%);
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
             background: linear-gradient(135deg, #e3f2fd 0%, #b3e5fc 100%);
-            border: 5px dashed #4fc3f7; 
-            padding: 40px;
-            border-radius: 28px;
-            box-shadow: 0 15px 0 #81d4fa, 0 15px 35px rgba(79, 195, 247, 0.4);
+            border: 4px dashed #4fc3f7;
+            padding: clamp(20px, 4vw, 36px);
+            border-radius: 24px;
+            box-shadow: 0 10px 0 #81d4fa, 0 12px 28px rgba(79,195,247,0.35);
             display: none;
             flex-direction: column;
-            gap: 25px;
+            gap: 18px;
             position: relative;
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: popIn 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
         }
 
-        .final-letter-card::before, .final-letter-card::after {
+        .final-letter-card::before,
+        .final-letter-card::after {
             content: "✨";
             position: absolute;
-            font-size: 26px;
+            font-size: 22px;
             animation: floatHeart 2s infinite alternate ease-in-out;
         }
-        .final-letter-card::before { top: -15px; left: 25px; }
-        .final-letter-card::after { bottom: -15px; right: 25px; }
+        .final-letter-card::before { top: -12px; left: 20px; }
+        .final-letter-card::after  { bottom: -12px; right: 20px; animation-delay: 1s; }
 
-        @keyframes floatHeart { 0% { transform: translateY(0); } 100% { transform: translateY(-10px); } }
-        @keyframes popIn { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes floatHeart { 0%{transform:translateY(0);} 100%{transform:translateY(-8px);} }
+        @keyframes popIn { 0%{transform:scale(0.7);opacity:0;} 100%{transform:scale(1);opacity:1;} }
 
         .final-title {
             font-family: 'Press Start 2P', monospace;
-            font-size: 22px;
-            color: #0288d1; 
+            font-size: clamp(14px, 3vw, 20px);
+            color: #0288d1;
             text-shadow: 2px 2px 0px #ffffff;
             text-align: center;
-            letter-spacing: 1px;
         }
 
+        /* الرسالة: حجم خط معقول وتمرير بدل ما تكبر */
         .final-text {
             font-family: 'CustomArabFont', sans-serif;
-            font-size: 30px;
-            line-height: 1.8;
-            color: #01579b; 
-            direction: rtl;
+            font-size: clamp(16px, 2.8vw, 22px);
+            line-height: 1.9;
+            color: #01579b;
+            direction: ltr;
             text-align: center;
             white-space: pre-line;
-            background: rgba(255, 255, 255, 0.6); 
-            padding: 24px;
-            border-radius: 18px;
+            background: rgba(255,255,255,0.65);
+            padding: clamp(14px, 3vw, 22px);
+            border-radius: 14px;
             border: 2px dashed #4fc3f7;
-        }
-
-        /* ========================================================
-           📱 أوامـر الـجـوال والـشـاشـات الـصـغـيـرة (Responsive Media Queries)
-           ======================================================== */
-        @media (max-width: 768px) {
-            .title {
-                font-size: 22px;
-                text-shadow: 2px 2px 0px #ff3b73;
-            }
-            .subtitle {
-                font-size: 10px;
-            }
-            .press-enter-btn {
-                font-size: 14px;
-                padding: 12px 30px;
-            }
-            .menu-container {
-                padding: 35px 20px;
-                gap: 20px;
-            }
-            .cutscene-text {
-                font-size: 22px;
-                max-width: 95%;
-            }
-            .animal-title {
-                font-size: 36px;
-            }
-            /* تصغير حجم مربعات الشخصيات لتناسب شاشة الجوال بشكل ممتاز */
-            .avatar-icon {
-                width: 110px;
-                height: 150px;
-                border-width: 3px;
-                box-shadow: 0 6px 0 #f0a3b8;
-            }
-            .avatar-name {
-                font-size: 15px;
-                padding: 4px 12px;
-                border-width: 2px;
-                box-shadow: 0 3px 0 #e6678d;
-            }
-            /* تعديل صندوق الحوار والخيارات تحت الشخصيات */
-            .dialogue-wrapper {
-                height: auto;
-                min-height: 180px;
-                padding: 15px;
-                border-width: 4px;
-                box-shadow: 0 8px 0 #e6678d;
-            }
-            .dialogue-text {
-                font-size: 20px;
-                margin-bottom: 15px;
-            }
-            .option-button {
-                font-size: 17px;
-                padding: 8px 16px;
-                border-width: 3px;
-                box-shadow: 0 4px 0 #c93b63;
-            }
-            .options-container {
-                max-height: 140px;
-            }
-            /* شاشة البوسنة في الجوال */
-            .cinematic-kiss-container img {
-                max-height: 50vh;
-            }
-            /* شاشة النهاية والهدية الملعوبة للجوال */
-            .prank-title {
-                font-size: 24px;
-            }
-            .prank-btn-container {
-                height: 160px;
-                width: 100%;
-            }
-            .gift-btn {
-                width: 100px;
-                font-size: 13px;
-                padding: 10px 0;
-            }
-            .gift-btn.yes { left: 20px; }
-            .gift-btn.no { right: 20px; }
-            .final-text {
-                font-size: 20px;
-                padding: 15px;
-            }
-            .final-title {
-                font-size: 16px;
-            }
-            .game-over-title {
-                font-size: 26px;
-            }
         }
     </style>
 </head>
@@ -669,18 +635,28 @@
 
     <div class="flash-overlay" id="flash"></div>
 
+    <!-- ══ MAIN MENU ══ -->
     <div class="main-menu" id="mainMenu">
         <div class="menu-container">
-            <h1 class="title">HMPH SIMULATOR</h1>
+            <div class="pixel-logo">
+                <div class="pixel-heart"></div>
+                <div class="pixel-heart"></div>
+                <div class="pixel-heart"></div>
+            </div>
+            <p class="title-top">★ pixel edition ★</p>
+            <h1 class="title">HMPH<br>SIMULATOR</h1>
             <p class="subtitle">A GAME BY NESO</p>
+            <div class="pixel-divider"><span>♥</span></div>
             <button class="press-enter-btn" id="enterBtn">
                 <span class="btn-heart">❤</span>
                 PRESS ENTER
                 <span class="btn-heart">❤</span>
             </button>
+            <p class="version-tag">VER 1.0 &nbsp;•&nbsp; PRESS ENTER OR TAP</p>
         </div>
     </div>
 
+    <!-- ══ CUTSCENE ══ -->
     <div class="cutscene-overlay" id="cutsceneLayer">
         <p class="cutscene-text" id="storyText"></p>
         <div class="telegram-chat" id="telegramChat">
@@ -691,12 +667,13 @@
         <h1 class="animal-title" id="animalText">هو الحيوان !!!</h1>
     </div>
 
-    <!-- شاشة مشهد البوسنة السينمائي المستقل فوق كل شيء تماماً -->
+    <!-- ══ CINEMATIC KISS ══ -->
     <div class="cinematic-kiss-container" id="cinematicKissContainer">
         <img src="us_kissing.png" alt="Cinematic Kiss">
         <div class="kiss-action-container" id="kissActionBox"></div>
     </div>
 
+    <!-- ══ GAMEPLAY ══ -->
     <div class="gameplay-screen" id="gameplayScreen">
         <div class="stage-area" id="stageArea">
             <div class="avatar-box him" id="avatarHim">
@@ -718,63 +695,63 @@
         </div>
     </div>
 
+    <!-- ══ GAME OVER ══ -->
     <div class="game-over-screen" id="gameOverScreen">
         <h1 class="game-over-title" id="gameOverMsg">ياكلب حتى لو لعبه ماتضربني</h1>
         <p class="game-over-sub">GAME OVER</p>
-        <p style="color:#ff608d; font-size:14px; font-weight: bold;">نيسو زعلانه.</p>
-        <button class="retry-button" id="retryBtn">  checkpoint  </button>
+        <p style="color:#ff608d; font-size:clamp(11px,2vw,14px); font-weight:bold;">نيسو زعلانه.</p>
+        <button class="retry-button" id="retryBtn">checkpoint</button>
     </div>
 
+    <!-- ══ ENDING ══ -->
     <div class="ending-screen" id="endingScreen">
-        <div id="prankSection" style="text-align: center; display: flex; flex-direction: column; align-items: center; width: 100%;">
+        <div id="prankSection" style="text-align:center;display:flex;flex-direction:column;align-items:center;width:100%;gap:20px;">
             <h1 class="prank-title" id="prankTitle">جاهز تستلم هديتك؟</h1>
             <div class="prank-btn-container">
                 <button class="gift-btn yes" id="yesBtn">YES</button>
-                <button class="gift-btn no" id="noBtn">NO</button>
+                <button class="gift-btn no"  id="noBtn">NO</button>
             </div>
         </div>
         <div class="final-letter-card" id="finalLetterCard">
-            <h2 class="final-title"> HAPPY BIRTHDAY </h2>
+            <h2 class="final-title">✦ HAPPY BIRTHDAY ✦</h2>
             <p class="final-text" id="birthdayMessage">happy birthday babyyy
-not gonna write a whole emotional essay because you already know you’re my favorite person.
-just wanted to say that i’m really grateful for you
-for our conversations our random moments
-and all the times you somehow manage to make me laugh
+not gonna write a whole emotional essay because you already know you're my favorite person.
+just wanted to say that i'm really grateful for you
+for our conversations, our random moments
+and all the times you somehow manage to make me laugh.
 i hope this year gives you more happiness, less stress
-and a lot of things worth getting excited about
-enjoy your day, eat something good, and remember that today you’re legally required to let people spoil you a little.
-happy birthday</p>
+and a lot of things worth getting excited about.
+enjoy your day, eat something good, and remember that today you're legally required to let people spoil you a little.
+happy birthday ♡</p>
         </div>
     </div>
 
     <script>
-        const enterBtn = document.getElementById('enterBtn');
-        const mainMenu = document.getElementById('mainMenu');
-        const cutsceneLayer = document.getElementById('cutsceneLayer');
-        const storyText = document.getElementById('storyText');
-        const telegramChat = document.getElementById('telegramChat');
-        const msgHim = document.getElementById('msgHim');
-        const msgMe = document.getElementById('msgMe');
-        const animalText = document.getElementById('animalText');
-        const flash = document.getElementById('flash');
-
+        const enterBtn       = document.getElementById('enterBtn');
+        const mainMenu       = document.getElementById('mainMenu');
+        const cutsceneLayer  = document.getElementById('cutsceneLayer');
+        const storyText      = document.getElementById('storyText');
+        const telegramChat   = document.getElementById('telegramChat');
+        const msgHim         = document.getElementById('msgHim');
+        const msgMe          = document.getElementById('msgMe');
+        const animalText     = document.getElementById('animalText');
+        const flash          = document.getElementById('flash');
         const gameplayScreen = document.getElementById('gameplayScreen');
-        const dialogueText = document.getElementById('dialogueText');
+        const dialogueText   = document.getElementById('dialogueText');
         const optionsContainer = document.getElementById('optionsContainer');
-        const avatarHim = document.getElementById('avatarHim');
-        const avatarMe = document.getElementById('avatarMe');
+        const avatarHim      = document.getElementById('avatarHim');
+        const avatarMe       = document.getElementById('avatarMe');
         const gameOverScreen = document.getElementById('gameOverScreen');
-        const retryBtn = document.getElementById('retryBtn');
-        const endingScreen = document.getElementById('endingScreen');
-        const yesBtn = document.getElementById('yesBtn');
-        const noBtn = document.getElementById('noBtn');
-        const prankTitle = document.getElementById('prankTitle');
+        const retryBtn       = document.getElementById('retryBtn');
+        const endingScreen   = document.getElementById('endingScreen');
+        const yesBtn         = document.getElementById('yesBtn');
+        const noBtn          = document.getElementById('noBtn');
+        const prankTitle     = document.getElementById('prankTitle');
         const finalLetterCard = document.getElementById('finalLetterCard');
-        const prankSection = document.getElementById('prankSection');
-        
-        const stageArea = document.getElementById('stageArea');
+        const prankSection   = document.getElementById('prankSection');
+        const stageArea      = document.getElementById('stageArea');
         const cinematicKissContainer = document.getElementById('cinematicKissContainer');
-        const kissActionBox = document.getElementById('kissActionBox');
+        const kissActionBox  = document.getElementById('kissActionBox');
 
         const script = [
             { text: "كنت ادري انه مشغول ..", waitAfter: 1500 },
@@ -787,10 +764,10 @@ happy birthday</p>
         ];
 
         let currentLine = 0;
-        const wordSpeed = 250; 
-        let lastCheckpointNode = "node1"; 
+        const wordSpeed = 250;
+        let lastCheckpointNode = "node1";
         let prankActive = false;
-        const prankDuration = 10000; 
+        const prankDuration = 10000;
 
         function initCutscene() {
             flash.classList.add('active');
@@ -806,21 +783,20 @@ happy birthday</p>
         function typeWords(targetElement, wordsArray, index, callback) {
             if (index < wordsArray.length) {
                 targetElement.innerText += (index === 0 ? "" : " ") + wordsArray[index];
-                setTimeout(() => { typeWords(targetElement, wordsArray, index + 1, callback); }, wordSpeed);
+                setTimeout(() => typeWords(targetElement, wordsArray, index + 1, callback), wordSpeed);
             } else if (callback) { callback(); }
         }
 
         function playNextLine() {
             if (currentLine < script.length) {
-                storyText.innerText = ""; 
+                storyText.innerText = "";
                 storyText.style.display = 'block';
                 const words = script[currentLine].text.split(" ");
+                const waitTime = script[currentLine].waitAfter;
                 typeWords(storyText, words, 0, () => {
-                    setTimeout(() => { currentLine++; playNextLine(); }, script[currentLine].waitAfter);
+                    setTimeout(() => { currentLine++; playNextLine(); }, waitTime);
                 });
-            } else {
-                showTelegramPhase();
-            }
+            } else { showTelegramPhase(); }
         }
 
         function showTelegramPhase() {
@@ -841,10 +817,8 @@ happy birthday</p>
             flash.classList.add('active');
             setTimeout(() => {
                 animalText.innerText = "هو الحيوان !";
-                animalText.style.fontSize = '60px';
                 animalText.style.display = 'block';
             }, 100);
-
             setTimeout(() => {
                 cutsceneLayer.classList.remove('glitch-active');
                 animalText.style.display = 'none';
@@ -855,514 +829,156 @@ happy birthday</p>
         }
 
         const gameTree = {
-            node1: {
-                speaker: "him", mood: "😐", text: "هاي بيب، خلصت مذاكره مره مسيو",
-                options: [{ text: "التالي", next: "node2" }]
-            },
-            node2: {
-                speaker: "me", mood: "😐", text: "أكثر…",
-                options: [{ text: "التالي", next: "node3" }]
-            },
-            node3: {
-                speaker: "him", mood: "😐", text: "أكثر？？ ليش زعلانه بيب ？ وش فيك？",
-                options: [{ text: "التالي", next: "node4" }]
-            },
-            node4: {
-                speaker: "me", mood: "😐", text: "ما في شي",
-                options: [
-                    { text: "A) طيب قولي لي يمكن أساعد", next: "node_A1" },
-                    { text: "B) وش سويت أنا؟", next: "node_B1" },
-                    { text: "C) طيب مياو", next: "node_C1" }
-                ]
-            },
-            node_A1: {
-                speaker: "him", mood: "😐", text: "طيب قولي لي يمكن أساعد",
-                options: [{ text: "التالي", next: "node_A2" }]
-            },
-            node_A2: {
-                speaker: "me", mood: "😐", text: "مو لازم تساعدني.",
-                options: [{ text: "التالي", next: "node_A3" }]
-            },
-            node_A3: {
-                speaker: "him", mood: "😐", text: "لا لازم… لأنك مو طبيعيه اليوم",
-                options: [{ text: "التالي", next: "node_path2" }]
-            },
-            node_B1: {
-                speaker: "him", mood: "😐", text: "وش سويت أنا؟",
-                options: [{ text: "التالي", next: "node_B2" }]
-            },
-            node_B2: {
-                speaker: "me", mood: "😐", text: "لا ماتسوي شي انت بريء ومسكين وانا الي ازعل من غير سبب",
-                options: [{ text: "التالي", next: "node_B3" }]
-            },
-            node_B3: {
-                speaker: "him", mood: "😐", text: "اي والله اني عبد مسكين مايسوي شي",
-                options: [{ text: "التالي", next: "node_path2" }]
-            },
-            node_C1: {
-                speaker: "him", mood: "😐", text: "مياو؟",
-                options: [{ text: "التالي", next: "node_C2" }]
-            },
-            node_C2: {
-                speaker: "me", mood: "😳", text: "وقته تطلع الميول? ",
-                options: [{ text: "التالي", next: "node_C3" }]
-            },
-            node_C3: {
-                speaker: "him", mood: "😐", text: "شسوي عاد قلت اهدي الجو شوي",
-                options: [{ text: "التالي", next: "node_path2" }]
-            },
-            node_path2: {
-                speaker: "me", mood: "😐", text: "لو يهمك كان عرفت وش الي مضايقني.",
-                options: [{ text: "التالي", next: "node_path2_him" }]
-            },
-            node_path2_him: {
-                speaker: "him", mood: "😐", text: "يهوو مالها دخل",
-                options: [
-                    { text: "A) عشاني ما رديت عليك؟", next: "node_2A1" },
-                    { text: "B) زعلتك بشي انا؟", next: "node_2B1" },
-                    { text: "C) ياخي نكد انتي كل يومين زعلانه", next: "node_2C1" }
-                ]
-            },
-            node_2A1: {
-                speaker: "him", mood: "😐", text: "عشاني ما رديت عليك？",
-                options: [{ text: "التالي", next: "node_2A2" }]
-            },
-            node_2A2: {
-                speaker: "me", mood: "😐", text: "وش رايك يعني.",
-                options: [{ text: "التالي", next: "node_2A3" }]
-            },
-            node_2A3: {
-                speaker: "him", mood: "😐", text: "كنت أذاكر وما قدرت أرد… آسف",
-                options: [{ text: "التالي", next: "node_transition" }]
-            },
-            node_2B1: {
-                speaker: "him", mood: "😐", text: "زعلتك بشي انا？",
-                options: [{ text: "التالي", next: "node_2B2" }]
-            },
-            node_2B2: {
-                speaker: "me", mood: "😒", text: "يمكن.",
-                options: [{ text: "التالي", next: "node_2B3" }]
-            },
-            node_2B3: {
-                speaker: "him", mood: "😐", text: "وش يعني يمكن؟ علميني وش سويت…",
-                options: [{ text: "التالي", next: "node_transition" }]
-            },
-            node_2C1: {
-                speaker: "him", mood: "😐", text: "ياخي نكد انتي كل يومين زعلانه",
-                options: [{ text: "التالي", next: "node_2C2" }]
-            },
-            node_2C2: {
-                speaker: "me", mood: "😐", text: "انا نكد ？",
-                options: [{ text: "التالي", next: "node_2C3" }]
-            },
-            node_2C3: {
-                speaker: "him", mood: "😐", text: "ايه دايم مخنفره",
-                options: [{ text: "التالي", next: "node_transition" }]
-            },
-            node_transition: {
-                speaker: "him", mood: "😐", text: "صدق يا حياتي انا مو فاهم علميني\nعشاني مارديت عليك؟ والله كنت قاعد اذاكر",
-                options: [{ text: "التالي", next: "node_trans2" }]
-            },
-            node_trans2: {
-                speaker: "me", mood: "😔", text: "(زعل أهدأ)",
-                options: [{ text: "التالي", next: "node_trans3" }]
-            },
-            node_trans3: {
-                speaker: "him", mood: "😐", text: "يعني زعلانه عشان ما رديت؟",
-                options: [{ text: "التالي", next: "node_trans4" }]
-            },
-            node_trans4: {
-                speaker: "me", mood: "😐", text: "…",
-                options: [
-                    { text: "A) كنت أذاكر والله ما طنشتك", next: "node_3A1" },
-                    { text: "B) طيب من البداية تكلمي ليش اللف والدوران", next: "node_3B1" },
-                    { text: "C) أحسك مكبرة الموضوع", next: "node_3C1" },
-                    { text: "D) آسف… ما انتبهت للجوال", next: "node_3D1" }
-                ]
-            },
-            node_3A1: {
-                speaker: "him", mood: "😐", text: "كنت أذاكر والله ما تجاهلتك",
-                options: [{ text: "التالي", next: "node_3A2" }]
-            },
-            node_3A2: {
-                speaker: "me", mood: "😐", text: "مو هذا اللي مضايقني…",
-                options: [{ text: "التالي", next: "node_3A3" }]
-            },
-            node_3A3: {
-                speaker: "him", mood: "😐", text: "طيب وش هو؟",
-                options: [{ text: "التالي", next: "node_final_pre" }]
-            },
-            node_3B1: {
-                speaker: "him", mood: "😐", text: "طيب من البداية تكلمي ليش اللف والدوران",
-                options: [{ text: "التالي", next: "node_3B2" }]
-            },
-            node_3B2: {
-                speaker: "me", mood: "😐", text: "ليش اتكلم والموضوع واضح؟؟",
-                options: [{ text: "التالي", next: "node_3B3" }]
-            },
-            node_3B3: {
-                speaker: "him", mood: "😐", text: "لا لازم أفهم انا عشان أصلح مابقرا افكارك يا نيسو",
-                options: [{ text: "التالي", next: "node_final_pre" }]
-            },
-            node_3C1: {
-                speaker: "him", mood: "😐", text: "أحس مكبرة الموضوع شوي",
-                options: [{ text: "التالي", next: "node_3C2" }]
-            },
-            node_3C2: {
-                speaker: "😒", text: "على زق",
-                options: [{ text: "التالي", next: "node_3C3" }]
-            },
-            node_3C3: {
-                speaker: "him", mood: "😐", text: "اطقطق ..",
-                options: [{ text: "التالي", next: "node_final_pre" }]
-            },
-            node_3D1: {
-                speaker: "him", mood: "😐", text: "آسف… ما انتبهت للجوال",
-                options: [{ text: "التالي", next: "node_3D2" }]
-            },
-            node_3D2: {
-                speaker: "me", mood: "😐", text: "يب ماراح تنتبه لان ماعندك حس مسؤوليه ان فيه احد قاعد ينتظرك. توقعت اني اولويه بالنسبه لك",
-                options: [{ text: "التالي", next: "node_3D3" }]
-            },
-            node_3D3: {
-                speaker: "him", mood: "😐", text: "مو قصدي أزعلك ياقلبي, علميني كيف اصلح الموقف",
-                options: [{ text: "التالي", next: "node_3D4" }]
-            },
-            node_3D4: {
-                speaker: "me", mood: "😐", text: "مدري عنك",
-                options: [{ text: "التالي", next: "node_final_pre" }]
-            },
-            node_final_pre: {
-                speaker: "him", mood: "😐", text: "طيب اسمعيني ",
-                options: [
-                    { text: "A) كنت أذاكر وما انتبهت", next: "node_4A1" },
-                    { text: "B) انا آسف خلاص", next: "node_4B1" },
-                    { text: "C) مو قصدي اتجاهلك", next: "node_4C1" },
-                    { text: "D)  زعلانه بس ماتوصل يعني", next: "node_4D1" }
-                ]
-            },
-            node_4A1: {
-                speaker: "him", mood: "😐", text: "كنت أذاكر وما انتبهت",
-                options: [{ text: "التالي", next: "node_4A2" }]
-            },
-            node_4A2: {
-                speaker: "me", mood: "😐", text: "مو عذر ماتعرف تشيك على جوالك؟",
-                options: [{ text: "التالي", next: "node_4A3" }]
-            },
-            node_4A3: {
-                speaker: "him", mood: "😐", text: "اسف ياقلبي ماكان عندي وقت",
-                options: [{ text: "التالي", next: "node_pre_boss" }]
-            },
-            node_4B1: {
-                speaker: "him", mood: "😐", text: "طيب آسف خلاص",
-                options: [{ text: "التالي", next: "node_4B2" }]
-            },
-            node_4B2: {
-                speaker: "me", mood: "😐", text: "مابتنحل كذا ترا",
-                options: [{ text: "التالي", next: "node_4B3" }]
-            },
-            node_4B3: {
-                speaker: "him", mood: "😐", text: "طيب وش تبيني اسوي !",
-                options: [{ text: "التالي", next: "node_pre_boss" }]
-            },
-            node_4C1: {
-                speaker: "him", mood: "😐", text: "مو قصدي أتجاهلك",
-                options: [{ text: "التالي", next: "node_4C2" }]
-            },
-            node_4C2: {
-                speaker: "me", mood: "😐", text: "بس تجاهلتني",
-                options: [{ text: "التالي", next: "node_4C3" }]
-            },
-            node_4C3: {
-                speaker: "him", mood: "😐", text: "ماكان عندي مكان اتكلم فيه",
-                options: [{ text: "التالي", next: "node_pre_boss" }]
-            },
-            node_4D1: {
-                speaker: "him", mood: "😐", text: "اوكي زعلانه بس ماتوصل يعني",
-                options: [{ text: "التالي", next: "node_4D2" }]
-            },
-            node_4D2: {
-                speaker: "me", mood: "😒", text: "الا توصل",
-                options: [{ text: "التالي", next: "node_4D3" }]
-            },
-            node_4D3: {
-                speaker: "him", mood: "😐", text: "خلاص فهمنا",
-                options: [{ text: "التالي", next: "node_pre_boss" }]
-            },
-            node_pre_boss: {
-                speaker: "him", mood: "😐", text: "طيب خلاص لا تزعلين…\nترى كنت أذاكر والله عشان ابني مستقبلنا",
-                options: [{ text: "التالي", next: "node_pre_boss2" }]
-            },
-            node_pre_boss2: {
-                speaker: "me", mood: "😐", text: "ما علي تذاكر ولا لا",
-                options: [{ text: "التالي", next: "node_pre_boss3" }]
-            },
-            /* 1️⃣ تعديل طلبك الأول: تغيير الجملة وحذف "ماتعيشين بدوني اعترفي" */
-            node_pre_boss3: {
-                speaker: "him", mood: "😐", text: "يعني تبيني اكون موجود؟",
-                options: [{ text: "التالي", next: "node_pre_boss4" }]
-            },
-            node_pre_boss4: {
-                speaker: "him", mood: "😐", text: "خلاص المره الجايه بسوي تخاطر معك وانا اذاكر عشان ماتزعلين",
-                options: [{ text: "التالي", next: "node_pre_boss5" }]
-            },
-            node_pre_boss5: {
-                speaker: "me", mood: "😐", text: "حمار",
-                options: [{ text: "التالي", next: "node_pre_boss6" }]
-            },
-            node_pre_boss6: {
-                speaker: "him", mood: "😏", text: "ليه تسبيني طيب",
-                options: [{ text: "التالي", next: "node_pre_boss7" }]
-            },
-            node_pre_boss7: {
-                speaker: "me", mood: "😐", text: "كلزق",
-                options: [{ text: "التالي", next: "node_pre_boss8" }]
-            },
-            node_pre_boss8: {
-                speaker: "him", mood: "😐", text: "اسف والله يقلبي معاد بكررها\nكيف كان يومك؟",
-                options: [{ text: "التالي", next: "node_pre_boss9" }]
-            },
-            node_pre_boss9: {
-                speaker: "me", mood: "😐", text: "نسيت",
-                options: [{ text: "التالي", next: "node_pre_boss10" }]
-            },
-            node_pre_boss10: {
-                speaker: "him", mood: "😐", text: "لا مانسيتي حكيني بالتفصيل",
-                options: [{ text: "التالي", next: "node_pre_boss11" }]
-            },
-            node_pre_boss11: {
-                speaker: "me", mood: "😐", text: "اول شي لسا زعلانه منك .",
-                options: [{ text: "التالي", next: "node_pre_boss11_2" }]
-            },
-            node_pre_boss11_2: {
-                speaker: "me", mood: "😐", text: "ثاني شي صحيت اليوم واختبرت وانا لسا زعلانه منك.",
-                options: [{ text: "التالي", next: "node_pre_boss11_3" }]
-            },
-            node_pre_boss11_3: {
-                speaker: "me", mood: "😐", text: "بعدين جلست مع اهلي ولعبت مع ركوني وانا لسا زعلانه منك",
-                options: [{ text: "التالي", next: "node_pre_boss11_4" }]
-            },
-            node_pre_boss11_4: {
-                speaker: "me", mood: "😐", text: "بعدين رحت غرفتي وتفرجت وانا لسا زعلانه منك",
-                options: [{ text: "التالي", next: "node_pre_boss11_5" }]
-            },
-            node_pre_boss11_5: {
-                speaker: "me", mood: "😐", text: "بعدين جيت وزعلتني زياده",
-                options: [
-                    { text: "A) طيب وش اسوي عشان ترضين", next: "node_5A1" },
-                    { text: "B) تكرهيني انتي", next: "node_5B1" },
-                    { text: "C) احبك", next: "node_5C1" },
-                    { text: "D) بروح انام", next: "node_5D1" }
-                ]
-            },
-            node_5A1: {
-                speaker: "him", mood: "😐", text: "طيب وش اسوي عشان ترضين",
-                options: [{ text: "التالي", next: "node_5A2" }]
-            },
-            node_5A2: {
-                speaker: "me", mood: "😐", text: "مادري فكر انت",
-                options: [{ text: "التالي", next: "node_5A3" }]
-            },
-            node_5A3: {
-                speaker: "him", mood: "😐", text: "طيب لو اقولك انك وحشتيني",
-                options: [{ text: "التالي", next: "node_5A4" }]
-            },
-            node_5A4: {
-                speaker: "me", mood: "😐", text: "لسا ماتترقع",
-                options: [{ text: "التالي", next: "node_boss_talk" }]
-            },
-            node_5B1: {
-                speaker: "him", mood: "😐", text: "تكرهيني صح",
-                options: [{ text: "التالي", next: "node_5B2" }]
-            },
-            node_5B2: {
-                speaker: "me", mood: "😐", text: "لا احبك بس hmph",
-                options: [{ text: "التالي", next: "node_5B3" }]
-            },
-            node_5B3: {
-                speaker: "him", mood: "😐", text: "Hmph",
-                options: [{ text: "التالي", next: "node_5B4" }]
-            },
-            node_5B4: {
-                speaker: "me", mood: "😱", text: "😱😱",
-                options: [{ text: "التالي", next: "node_boss_talk" }]
-            },
-            node_5C1: {
-                speaker: "him", mood: "😐", text: "احبك",
-                options: [{ text: "التالي", next: "node_5C2" }]
-            },
-            node_5C2: {
-                speaker: "me", mood: "😐", text: "وانا كمان بس hmphh",
-                options: [{ text: "التالي", next: "node_5C3" }]
-            },
-            node_5C3: {
-                speaker: "him", mood: "😐", text: " كيوووت",
-                options: [{ text: "التالي", next: "node_5C4" }]
-            },
-            node_5C4: {
-                speaker: "me", mood: "😐", text: " اسكت",
-                options: [{ text: "التالي", next: "node_boss_talk" }]
-            },
-            node_5D1: {
-                speaker: "him", mood: "😐", text: "بروح انام",
-                options: [{ text: "التالي", next: "node_5D2" }]
-            },
-            node_5D2: {
-                speaker: "me", mood: "😐", text: "جرب وشوف وش بيصير لك",
-                options: [{ text: "التالي", next: "node_5D3" }]
-            },
-            node_5D3: {
-                speaker: "him", mood: "😐", text: "لا خلاص اسف",
-                options: [{ text: "التالي", next: "node_boss_talk" }]
-            },
-            node_boss_talk: {
-                speaker: "him", mood: "😐", text: "طيب تعالي هنا",
-                options: [{ text: "التالي", next: "node_boss_me" }]
-            },
-            node_boss_me: {
-                speaker: "me", mood: "😐", text: "وش",
-                options: [
-                    { text: "A) بقولك شي", next: "node_bA1" },
-                    { text: "B) عشان اشتقت لك", next: "node_bB1" },
-                    { text: "C) ابي اسمع صوتك", next: "node_bC1" },
-                    { text: "D) ابي دقيقه بس بدون هواش", next: "node_bD1" }
-                ]
-            },
-            node_bA1: {
-                speaker: "him", mood: "😐", text: "بقولك شي",
-                options: [{ text: "التالي", next: "node_bA2" }]
-            },
-            node_bA2: {
-                speaker: "me", mood: "😐", text: "قول",
-                options: [{ text: "التالي", next: "node_bA3" }]
-            },
-            node_bA3: {
-                speaker: "him", mood: "😐", text: "حتى وانتي زعلانه مرا كيوت",
-                options: [{ text: "التالي", next: "node_bA4" }]
-            },
-            node_bA4: {
-                speaker: "me", mood: "😐", text: "واذا كيوت ليه تزعلني",
-                options: [{ text: "التالي", next: "node_bA5" }]
-            },
-            node_bA5: {
-                speaker: "him", mood: "😐", text: "مدري قليل ادب انا ازعل وحده كيوت زيك",
-                options: [{ text: "التالي", next: "node_bA6" }]
-            },
-            node_bA6: {
-                speaker: "me", mood: "😐", text: "صح والله قليل ادب",
-                options: [{ text: "التالي", next: "node_boss_fight_end" }]
-            },
-            node_bB1: {
-                speaker: "him", mood: "😐", text: "عشان اشتقت لك",
-                options: [{ text: "التالي", next: "node_bB2" }]
-            },
-            node_bB2: {
-                speaker: "me", mood: "😐", text: "توك كنت مزعلني",
-                options: [{ text: "التالي", next: "node_bB3" }]
-            },
-            node_bB3: {
-                speaker: "him", mood: "😐", text: "عدي ازعلك واشتاقلك وين المشكله",
-                options: [{ text: "التالي", next: "node_bB4" }]
-            },
-            node_bB4: {
-                speaker: "me", mood: "😐", text: "صح ابسط حقوقك",
-                options: [{ text: "التالي", next: "node_bB5" }]
-            },
-            node_bB5: {
-                speaker: "him", mood: "😐", text: "احبك",
-                options: [{ text: "التالي", next: "node_bB6" }]
-            },
-            node_bB6: {
-                speaker: "me", mood: "😐", text: "Hmph",
-                options: [{ text: "التالي", next: "node_boss_fight_end" }]
-            },
-            node_bC1: {
-                speaker: "him", mood: "😐", text: "ابي اسمع صوتك",
-                options: [{ text: "التالي", next: "node_bC2" }]
-            },
-            node_bC2: {
-                speaker: "me", mood: "😐", text: "محروم",
-                options: [{ text: "التالي", next: "node_bC3" }]
-            },
-            node_bC3: {
-                speaker: "him", mood: "😐", text: "طيب شوي بس",
-                options: [{ text: "التالي", next: "node_bC4" }]
-            },
-            node_bC4: {
-                speaker: "me", mood: "😐", text: "لا",
-                options: [{ text: "التالي", next: "node_bC5" }]
-            },
-            node_bC5: {
-                speaker: "him", mood: "😐", text: "بليز",
-                options: [{ text: "التالي", next: "node_bC6" }]
-            },
-            node_bC6: {
-                speaker: "me", mood: "😐", text: "لا",
-                options: [{ text: "التالي", next: "node_bC7" }]
-            },
-            node_bC7: {
-                speaker: "him", mood: "😐", text: "بليز",
-                options: [{ text: "التالي", next: "node_bC8" }]
-            },
-            node_bC8: {
-                speaker: "me", mood: "😐", text: "كيف اطفيه ذا",
-                options: [{ text: "التالي", next: "node_boss_fight_end" }]
-            },
-            node_bD1: {
-                speaker: "him", mood: "😐", text: "ابي دقيقه بس بدون هواش",
-                options: [{ text: "التالي", next: "node_bD2" }]
-            },
-            node_bD2: {
-                speaker: "me", mood: "😐", text: "محروم",
-                options: [{ text: "التالي", next: "node_bD3" }]
-            },
-            node_bD3: {
-                speaker: "him", mood: "😐", text: "احسني داخل boss fight",
-                options: [{ text: "التالي", next: "node_bD4" }]
-            },
-            node_bD4: {
-                speaker: "me", mood: "😐", text: "وش شعورك وانت خسران",
-                options: [{ text: "التالي", next: "node_bD5" }]
-            },
-            node_bD5: {
-                speaker: "him", mood: "😐", text: "عندي لاق والله تعرفين نت مصر",
-                options: [{ text: "التالي", next: "node_bD6" }]
-            },
-            node_bD6: {
-                speaker: "me", mood: "😐", text: "لا خلاص ماتترقع",
-                options: [{ text: "التالي", next: "node_boss_fight_end" }]
-            },
-            node_boss_fight_end: {
-                speaker: "him", mood: "😐", text: "اختار قرارك النهائي بحذر:",
-                options: [
-                    { text: "💗 اراضيها", next: "node_good_end1" },
-                    { text: "🔪 اضربها", next: "node_bad_end" }
-                ]
-            },
-            node_good_end1: {
-                speaker: "him", mood: "😐", text: "تعالي هنا بس",
-                options: [{ text: "التالي", next: "node_good_end2" }]
-            },
-            node_good_end2: {
-                speaker: "me", mood: "😐", text: "Hmph",
-                options: [{ text: "التالي", next: "node_good_end3" }]
-            },
-            node_good_end3: {
-                speaker: "him", mood: "😐", text: "لسا زعلانه؟",
-                options: [{ text: "التالي", next: "node_good_end4" }]
-            },
-            node_good_end4: {
-                speaker: "me", mood: "😐", text: "ايه",
-                options: [{ text: "التالي", next: "node_good_end5" }]
-            },
-            node_good_end5: {
-                speaker: "him", mood: "😐", text: "طيب خذي ذي",
-                options: [{ text: "التالي", next: "TRIGGER_KISS_SCENE" }]
-            },
-            node_bad_end: {
-                speaker: "him", mood: "😐", text: "بضربها..",
-                options: [{ text: "？？？", next: "TRIGGER_LOSE" }]
-            }
+            node1: { speaker:"him", mood:"😐", text:"هاي بيب، خلصت مذاكره مره مسيو", options:[{text:"التالي",next:"node2"}] },
+            node2: { speaker:"me", mood:"😐", text:"أكثر…", options:[{text:"التالي",next:"node3"}] },
+            node3: { speaker:"him", mood:"😐", text:"أكثر？？ ليش زعلانه بيب ？ وش فيك؟", options:[{text:"التالي",next:"node4"}] },
+            node4: { speaker:"me", mood:"😐", text:"ما في شي", options:[
+                {text:"A) طيب قولي لي يمكن أساعد",next:"node_A1"},
+                {text:"B) وش سويت أنا؟",next:"node_B1"},
+                {text:"C) طيب مياو",next:"node_C1"}
+            ]},
+            node_A1:{speaker:"him",mood:"😐",text:"طيب قولي لي يمكن أساعد",options:[{text:"التالي",next:"node_A2"}]},
+            node_A2:{speaker:"me",mood:"😐",text:"مو لازم تساعدني.",options:[{text:"التالي",next:"node_A3"}]},
+            node_A3:{speaker:"him",mood:"😐",text:"لا لازم… لأنك مو طبيعيه اليوم",options:[{text:"التالي",next:"node_path2"}]},
+            node_B1:{speaker:"him",mood:"😐",text:"وش سويت أنا؟",options:[{text:"التالي",next:"node_B2"}]},
+            node_B2:{speaker:"me",mood:"😐",text:"لا ماتسوي شي انت بريء ومسكين وانا الي ازعل من غير سبب",options:[{text:"التالي",next:"node_B3"}]},
+            node_B3:{speaker:"him",mood:"😐",text:"اي والله اني عبد مسكين مايسوي شي",options:[{text:"التالي",next:"node_path2"}]},
+            node_C1:{speaker:"him",mood:"😐",text:"مياو؟",options:[{text:"التالي",next:"node_C2"}]},
+            node_C2:{speaker:"me",mood:"😳",text:"وقته تطلع الميول?",options:[{text:"التالي",next:"node_C3"}]},
+            node_C3:{speaker:"him",mood:"😐",text:"شسوي عاد قلت اهدي الجو شوي",options:[{text:"التالي",next:"node_path2"}]},
+            node_path2:{speaker:"me",mood:"😐",text:"لو يهمك كان عرفت وش الي مضايقني.",options:[{text:"التالي",next:"node_path2_him"}]},
+            node_path2_him:{speaker:"him",mood:"😐",text:"يهوو مالها دخل",options:[
+                {text:"A) عشاني ما رديت عليك؟",next:"node_2A1"},
+                {text:"B) زعلتك بشي انا؟",next:"node_2B1"},
+                {text:"C) ياخي نكد انتي كل يومين زعلانه",next:"node_2C1"}
+            ]},
+            node_2A1:{speaker:"him",mood:"😐",text:"عشاني ما رديت عليك؟",options:[{text:"التالي",next:"node_2A2"}]},
+            node_2A2:{speaker:"me",mood:"😐",text:"وش رايك يعني.",options:[{text:"التالي",next:"node_2A3"}]},
+            node_2A3:{speaker:"him",mood:"😐",text:"كنت أذاكر وما قدرت أرد… آسف",options:[{text:"التالي",next:"node_transition"}]},
+            node_2B1:{speaker:"him",mood:"😐",text:"زعلتك بشي انا؟",options:[{text:"التالي",next:"node_2B2"}]},
+            node_2B2:{speaker:"me",mood:"😒",text:"يمكن.",options:[{text:"التالي",next:"node_2B3"}]},
+            node_2B3:{speaker:"him",mood:"😐",text:"وش يعني يمكن؟ علميني وش سويت…",options:[{text:"التالي",next:"node_transition"}]},
+            node_2C1:{speaker:"him",mood:"😐",text:"ياخي نكد انتي كل يومين زعلانه",options:[{text:"التالي",next:"node_2C2"}]},
+            node_2C2:{speaker:"me",mood:"😐",text:"انا نكد؟",options:[{text:"التالي",next:"node_2C3"}]},
+            node_2C3:{speaker:"him",mood:"😐",text:"ايه دايم مخنفره",options:[{text:"التالي",next:"node_transition"}]},
+            node_transition:{speaker:"him",mood:"😐",text:"صدق يا حياتي انا مو فاهم علميني\nعشاني مارديت عليك؟ والله كنت قاعد اذاكر",options:[{text:"التالي",next:"node_trans2"}]},
+            node_trans2:{speaker:"me",mood:"😔",text:"(زعل أهدأ)",options:[{text:"التالي",next:"node_trans3"}]},
+            node_trans3:{speaker:"him",mood:"😐",text:"يعني زعلانه عشان ما رديت؟",options:[{text:"التالي",next:"node_trans4"}]},
+            node_trans4:{speaker:"me",mood:"😐",text:"…",options:[
+                {text:"A) كنت أذاكر والله ما طنشتك",next:"node_3A1"},
+                {text:"B) طيب من البداية تكلمي",next:"node_3B1"},
+                {text:"C) أحسك مكبرة الموضوع",next:"node_3C1"},
+                {text:"D) آسف… ما انتبهت للجوال",next:"node_3D1"}
+            ]},
+            node_3A1:{speaker:"him",mood:"😐",text:"كنت أذاكر والله ما تجاهلتك",options:[{text:"التالي",next:"node_3A2"}]},
+            node_3A2:{speaker:"me",mood:"😐",text:"مو هذا اللي مضايقني…",options:[{text:"التالي",next:"node_3A3"}]},
+            node_3A3:{speaker:"him",mood:"😐",text:"طيب وش هو؟",options:[{text:"التالي",next:"node_final_pre"}]},
+            node_3B1:{speaker:"him",mood:"😐",text:"طيب من البداية تكلمي ليش اللف والدوران",options:[{text:"التالي",next:"node_3B2"}]},
+            node_3B2:{speaker:"me",mood:"😐",text:"ليش اتكلم والموضوع واضح؟؟",options:[{text:"التالي",next:"node_3B3"}]},
+            node_3B3:{speaker:"him",mood:"😐",text:"لا لازم أفهم انا عشان أصلح مابقرا افكارك يا نيسو",options:[{text:"التالي",next:"node_final_pre"}]},
+            node_3C1:{speaker:"him",mood:"😐",text:"أحس مكبرة الموضوع شوي",options:[{text:"التالي",next:"node_3C2"}]},
+            node_3C2:{speaker:"😒",text:"على زق",options:[{text:"التالي",next:"node_3C3"}]},
+            node_3C3:{speaker:"him",mood:"😐",text:"اطقطق ..",options:[{text:"التالي",next:"node_final_pre"}]},
+            node_3D1:{speaker:"him",mood:"😐",text:"آسف… ما انتبهت للجوال",options:[{text:"التالي",next:"node_3D2"}]},
+            node_3D2:{speaker:"me",mood:"😐",text:"يب ماراح تنتبه لان ماعندك حس مسؤوليه ان فيه احد قاعد ينتظرك. توقعت اني اولويه بالنسبه لك",options:[{text:"التالي",next:"node_3D3"}]},
+            node_3D3:{speaker:"him",mood:"😐",text:"مو قصدي أزعلك ياقلبي, علميني كيف اصلح الموقف",options:[{text:"التالي",next:"node_3D4"}]},
+            node_3D4:{speaker:"me",mood:"😐",text:"مدري عنك",options:[{text:"التالي",next:"node_final_pre"}]},
+            node_final_pre:{speaker:"him",mood:"😐",text:"طيب اسمعيني",options:[
+                {text:"A) كنت أذاكر وما انتبهت",next:"node_4A1"},
+                {text:"B) انا آسف خلاص",next:"node_4B1"},
+                {text:"C) مو قصدي اتجاهلك",next:"node_4C1"},
+                {text:"D) زعلانه بس ماتوصل يعني",next:"node_4D1"}
+            ]},
+            node_4A1:{speaker:"him",mood:"😐",text:"كنت أذاكر وما انتبهت",options:[{text:"التالي",next:"node_4A2"}]},
+            node_4A2:{speaker:"me",mood:"😐",text:"مو عذر ماتعرف تشيك على جوالك؟",options:[{text:"التالي",next:"node_4A3"}]},
+            node_4A3:{speaker:"him",mood:"😐",text:"اسف ياقلبي ماكان عندي وقت",options:[{text:"التالي",next:"node_pre_boss"}]},
+            node_4B1:{speaker:"him",mood:"😐",text:"طيب آسف خلاص",options:[{text:"التالي",next:"node_4B2"}]},
+            node_4B2:{speaker:"me",mood:"😐",text:"مابتنحل كذا ترا",options:[{text:"التالي",next:"node_4B3"}]},
+            node_4B3:{speaker:"him",mood:"😐",text:"طيب وش تبيني اسوي !",options:[{text:"التالي",next:"node_pre_boss"}]},
+            node_4C1:{speaker:"him",mood:"😐",text:"مو قصدي أتجاهلك",options:[{text:"التالي",next:"node_4C2"}]},
+            node_4C2:{speaker:"me",mood:"😐",text:"بس تجاهلتني",options:[{text:"التالي",next:"node_4C3"}]},
+            node_4C3:{speaker:"him",mood:"😐",text:"ماكان عندي مكان اتكلم فيه",options:[{text:"التالي",next:"node_pre_boss"}]},
+            node_4D1:{speaker:"him",mood:"😐",text:"اوكي زعلانه بس ماتوصل يعني",options:[{text:"التالي",next:"node_4D2"}]},
+            node_4D2:{speaker:"me",mood:"😒",text:"الا توصل",options:[{text:"التالي",next:"node_4D3"}]},
+            node_4D3:{speaker:"him",mood:"😐",text:"خلاص فهمنا",options:[{text:"التالي",next:"node_pre_boss"}]},
+            node_pre_boss:{speaker:"him",mood:"😐",text:"طيب خلاص لا تزعلين…\nترى كنت أذاكر والله عشان ابني مستقبلنا",options:[{text:"التالي",next:"node_pre_boss2"}]},
+            node_pre_boss2:{speaker:"me",mood:"😐",text:"ما علي تذاكر ولا لا",options:[{text:"التالي",next:"node_pre_boss3"}]},
+            node_pre_boss3:{speaker:"him",mood:"😐",text:"يعني تبيني اكون موجود؟",options:[{text:"التالي",next:"node_pre_boss4"}]},
+            node_pre_boss4:{speaker:"him",mood:"😐",text:"خلاص المره الجايه بسوي تخاطر معك وانا اذاكر عشان ماتزعلين",options:[{text:"التالي",next:"node_pre_boss5"}]},
+            node_pre_boss5:{speaker:"me",mood:"😐",text:"حمار",options:[{text:"التالي",next:"node_pre_boss6"}]},
+            node_pre_boss6:{speaker:"him",mood:"😏",text:"ليه تسبيني طيب",options:[{text:"التالي",next:"node_pre_boss7"}]},
+            node_pre_boss7:{speaker:"me",mood:"😐",text:"كلزق",options:[{text:"التالي",next:"node_pre_boss8"}]},
+            node_pre_boss8:{speaker:"him",mood:"😐",text:"اسف والله يقلبي معاد بكررها\nكيف كان يومك؟",options:[{text:"التالي",next:"node_pre_boss9"}]},
+            node_pre_boss9:{speaker:"me",mood:"😐",text:"نسيت",options:[{text:"التالي",next:"node_pre_boss10"}]},
+            node_pre_boss10:{speaker:"him",mood:"😐",text:"لا مانسيتي حكيني بالتفصيل",options:[{text:"التالي",next:"node_pre_boss11"}]},
+            node_pre_boss11:{speaker:"me",mood:"😐",text:"اول شي لسا زعلانه منك .",options:[{text:"التالي",next:"node_pre_boss11_2"}]},
+            node_pre_boss11_2:{speaker:"me",mood:"😐",text:"ثاني شي صحيت اليوم واختبرت وانا لسا زعلانه منك.",options:[{text:"التالي",next:"node_pre_boss11_3"}]},
+            node_pre_boss11_3:{speaker:"me",mood:"😐",text:"بعدين جلست مع اهلي ولعبت مع ركوني وانا لسا زعلانه منك",options:[{text:"التالي",next:"node_pre_boss11_4"}]},
+            node_pre_boss11_4:{speaker:"me",mood:"😐",text:"بعدين رحت غرفتي وتفرجت وانا لسا زعلانه منك",options:[{text:"التالي",next:"node_pre_boss11_5"}]},
+            node_pre_boss11_5:{speaker:"me",mood:"😐",text:"بعدين جيت وزعلتني زياده",options:[
+                {text:"A) طيب وش اسوي عشان ترضين",next:"node_5A1"},
+                {text:"B) تكرهيني انتي",next:"node_5B1"},
+                {text:"C) احبك",next:"node_5C1"},
+                {text:"D) بروح انام",next:"node_5D1"}
+            ]},
+            node_5A1:{speaker:"him",mood:"😐",text:"طيب وش اسوي عشان ترضين",options:[{text:"التالي",next:"node_5A2"}]},
+            node_5A2:{speaker:"me",mood:"😐",text:"مادري فكر انت",options:[{text:"التالي",next:"node_5A3"}]},
+            node_5A3:{speaker:"him",mood:"😐",text:"طيب لو اقولك انك وحشتيني",options:[{text:"التالي",next:"node_5A4"}]},
+            node_5A4:{speaker:"me",mood:"😐",text:"لسا ماتترقع",options:[{text:"التالي",next:"node_boss_talk"}]},
+            node_5B1:{speaker:"him",mood:"😐",text:"تكرهيني صح",options:[{text:"التالي",next:"node_5B2"}]},
+            node_5B2:{speaker:"me",mood:"😐",text:"لا احبك بس hmph",options:[{text:"التالي",next:"node_5B3"}]},
+            node_5B3:{speaker:"him",mood:"😐",text:"Hmph",options:[{text:"التالي",next:"node_5B4"}]},
+            node_5B4:{speaker:"me",mood:"😱",text:"😱😱",options:[{text:"التالي",next:"node_boss_talk"}]},
+            node_5C1:{speaker:"him",mood:"😐",text:"احبك",options:[{text:"التالي",next:"node_5C2"}]},
+            node_5C2:{speaker:"me",mood:"😐",text:"وانا كمان بس hmphh",options:[{text:"التالي",next:"node_5C3"}]},
+            node_5C3:{speaker:"him",mood:"😐",text:"كيوووت",options:[{text:"التالي",next:"node_5C4"}]},
+            node_5C4:{speaker:"me",mood:"😐",text:"اسكت",options:[{text:"التالي",next:"node_boss_talk"}]},
+            node_5D1:{speaker:"him",mood:"😐",text:"بروح انام",options:[{text:"التالي",next:"node_5D2"}]},
+            node_5D2:{speaker:"me",mood:"😐",text:"جرب وشوف وش بيصير لك",options:[{text:"التالي",next:"node_5D3"}]},
+            node_5D3:{speaker:"him",mood:"😐",text:"لا خلاص اسف",options:[{text:"التالي",next:"node_boss_talk"}]},
+            node_boss_talk:{speaker:"him",mood:"😐",text:"طيب تعالي هنا",options:[{text:"التالي",next:"node_boss_me"}]},
+            node_boss_me:{speaker:"me",mood:"😐",text:"وش",options:[
+                {text:"A) بقولك شي",next:"node_bA1"},
+                {text:"B) عشان اشتقت لك",next:"node_bB1"},
+                {text:"C) ابي اسمع صوتك",next:"node_bC1"},
+                {text:"D) ابي دقيقه بدون هواش",next:"node_bD1"}
+            ]},
+            node_bA1:{speaker:"him",mood:"😐",text:"بقولك شي",options:[{text:"التالي",next:"node_bA2"}]},
+            node_bA2:{speaker:"me",mood:"😐",text:"قول",options:[{text:"التالي",next:"node_bA3"}]},
+            node_bA3:{speaker:"him",mood:"😐",text:"حتى وانتي زعلانه مرا كيوت",options:[{text:"التالي",next:"node_bA4"}]},
+            node_bA4:{speaker:"me",mood:"😐",text:"واذا كيوت ليه تزعلني",options:[{text:"التالي",next:"node_bA5"}]},
+            node_bA5:{speaker:"him",mood:"😐",text:"مدري قليل ادب انا ازعل وحده كيوت زيك",options:[{text:"التالي",next:"node_bA6"}]},
+            node_bA6:{speaker:"me",mood:"😐",text:"صح والله قليل ادب",options:[{text:"التالي",next:"node_boss_fight_end"}]},
+            node_bB1:{speaker:"him",mood:"😐",text:"عشان اشتقت لك",options:[{text:"التالي",next:"node_bB2"}]},
+            node_bB2:{speaker:"me",mood:"😐",text:"توك كنت مزعلني",options:[{text:"التالي",next:"node_bB3"}]},
+            node_bB3:{speaker:"him",mood:"😐",text:"عدي ازعلك واشتاقلك وين المشكله",options:[{text:"التالي",next:"node_bB4"}]},
+            node_bB4:{speaker:"me",mood:"😐",text:"صح ابسط حقوقك",options:[{text:"التالي",next:"node_bB5"}]},
+            node_bB5:{speaker:"him",mood:"😐",text:"احبك",options:[{text:"التالي",next:"node_bB6"}]},
+            node_bB6:{speaker:"me",mood:"😐",text:"Hmph",options:[{text:"التالي",next:"node_boss_fight_end"}]},
+            node_bC1:{speaker:"him",mood:"😐",text:"ابي اسمع صوتك",options:[{text:"التالي",next:"node_bC2"}]},
+            node_bC2:{speaker:"me",mood:"😐",text:"محروم",options:[{text:"التالي",next:"node_bC3"}]},
+            node_bC3:{speaker:"him",mood:"😐",text:"طيب شوي بس",options:[{text:"التالي",next:"node_bC4"}]},
+            node_bC4:{speaker:"me",mood:"😐",text:"لا",options:[{text:"التالي",next:"node_bC5"}]},
+            node_bC5:{speaker:"him",mood:"😐",text:"بليز",options:[{text:"التالي",next:"node_bC6"}]},
+            node_bC6:{speaker:"me",mood:"😐",text:"لا",options:[{text:"التالي",next:"node_bC7"}]},
+            node_bC7:{speaker:"him",mood:"😐",text:"بليز",options:[{text:"التالي",next:"node_bC8"}]},
+            node_bC8:{speaker:"me",mood:"😐",text:"كيف اطفيه ذا",options:[{text:"التالي",next:"node_boss_fight_end"}]},
+            node_bD1:{speaker:"him",mood:"😐",text:"ابي دقيقه بس بدون هواش",options:[{text:"التالي",next:"node_bD2"}]},
+            node_bD2:{speaker:"me",mood:"😐",text:"محروم",options:[{text:"التالي",next:"node_bD3"}]},
+            node_bD3:{speaker:"him",mood:"😐",text:"احسني داخل boss fight",options:[{text:"التالي",next:"node_bD4"}]},
+            node_bD4:{speaker:"me",mood:"😐",text:"وش شعورك وانت خسران",options:[{text:"التالي",next:"node_bD5"}]},
+            node_bD5:{speaker:"him",mood:"😐",text:"عندي لاق والله تعرفين نت مصر",options:[{text:"التالي",next:"node_bD6"}]},
+            node_bD6:{speaker:"me",mood:"😐",text:"لا خلاص ماتترقع",options:[{text:"التالي",next:"node_boss_fight_end"}]},
+            node_boss_fight_end:{speaker:"him",mood:"😐",text:"اختار قرارك النهائي بحذر:",options:[
+                {text:"💗 اراضيها",next:"node_good_end1"},
+                {text:"🔪 اضربها",next:"node_bad_end"}
+            ]},
+            node_good_end1:{speaker:"him",mood:"😐",text:"تعالي هنا بس",options:[{text:"التالي",next:"node_good_end2"}]},
+            node_good_end2:{speaker:"me",mood:"😐",text:"Hmph",options:[{text:"التالي",next:"node_good_end3"}]},
+            node_good_end3:{speaker:"him",mood:"😐",text:"لسا زعلانه؟",options:[{text:"التالي",next:"node_good_end4"}]},
+            node_good_end4:{speaker:"me",mood:"😐",text:"ايه",options:[{text:"التالي",next:"node_good_end5"}]},
+            node_good_end5:{speaker:"him",mood:"😐",text:"طيب خذي ذي",options:[{text:"التالي",next:"TRIGGER_KISS_SCENE"}]},
+            node_bad_end:{speaker:"him",mood:"😐",text:"بضربها..",options:[{text:"؟؟؟",next:"TRIGGER_LOSE"}]}
         };
 
         function startActualGameplay() {
@@ -1371,78 +987,51 @@ happy birthday</p>
         }
 
         function renderNode(nodeId) {
-            if (["node1", "node_path2", "node_transition", "node_final_pre", "node_pre_boss11", "node_boss_talk", "node_boss_fight_end"].includes(nodeId)) {
+            if (["node1","node_path2","node_transition","node_final_pre","node_pre_boss11","node_boss_talk","node_boss_fight_end"].includes(nodeId)) {
                 lastCheckpointNode = nodeId;
             }
-
             const node = gameTree[nodeId];
             if (!node) return;
 
             const spriteMap = {
-                him: {
-                    "😐": "characters/him_normal.png", "😏": "characters/him_happy.png", "normal": "characters/him_normal.png",
-                    "standing": "characters/him_standing.png", "sad": "characters/him_sad.png", "laugh": "characters/him_laugh.png",
-                    "happy": "characters/him_happy.png", "blink": "characters/him_blink.png", "default": "characters/him_normal.png"
-                },
-                me: {
-                    "😐": "characters/her_normal.png", "😳": "characters/her_shy.png", "😒": "characters/her_annoyed.png",
-                    "😔": "characters/her_sad.png", "😱": "characters/her_shocked.png", "normal": "characters/her_normal.png",
-                    "standing": "characters/her_standing.png", "shy": "characters/her_shy.png", "shocked": "characters/her_shocked.png",
-                    "sad": "characters/her_sad.png", "happy": "characters/her_happy.png", "disappointed": "characters/her_disappointed.png",
-                    "annoyed": "characters/her_annoyed.png", "angry": "characters/her_angry.png", "default": "characters/her_normal.png"
-                }
+                him: { "😐":"characters/him_normal.png","😏":"characters/him_happy.png","default":"characters/him_normal.png" },
+                me:  { "😐":"characters/her_normal.png","😳":"characters/her_shy.png","😒":"characters/her_annoyed.png",
+                        "😔":"characters/her_sad.png","😱":"characters/her_shocked.png","default":"characters/her_normal.png" }
             };
-
-            const currentMood = node.mood || "😐";
 
             if (node.speaker === "him") {
                 avatarHim.classList.add('active');
                 avatarMe.classList.remove('active');
-                const himSrc = spriteMap.him[currentMood] || spriteMap.him["default"];
-                document.getElementById('himSpriteImg').src = himSrc;
+                document.getElementById('himSpriteImg').src = spriteMap.him[node.mood||"😐"] || spriteMap.him.default;
             } else {
                 avatarMe.classList.add('active');
                 avatarHim.classList.remove('active');
-                const meSrc = spriteMap.me[currentMood] || spriteMap.me["default"];
-                document.getElementById('meSpriteImg').src = meSrc;
+                document.getElementById('meSpriteImg').src = spriteMap.me[node.mood||"😐"] || spriteMap.me.default;
             }
 
             dialogueText.innerText = node.text;
             optionsContainer.innerHTML = "";
-
-            if (node.options.length > 2) {
-                optionsContainer.className = "options-container";
-            } else {
-                optionsContainer.className = "options-container grid-2";
-            }
+            optionsContainer.className = node.options.length > 2 ? "options-container" : "options-container grid-2";
 
             node.options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = "option-button";
                 btn.innerText = opt.text;
                 btn.addEventListener('click', () => {
-                    if (opt.next === "TRIGGER_LOSE") {
-                        triggerGameOver();
-                    } else if (opt.next === "TRIGGER_KISS_SCENE") {
-                        triggerKissCinematic();
-                    } else {
-                        renderNode(opt.next);
-                    }
+                    if (opt.next === "TRIGGER_LOSE") triggerGameOver();
+                    else if (opt.next === "TRIGGER_KISS_SCENE") triggerKissCinematic();
+                    else renderNode(opt.next);
                 });
                 optionsContainer.appendChild(btn);
             });
         }
 
-        /* دالة تشغيل مشهد البوسنة كشاشة مستقلة نظيفة دون تداخل */
         function triggerKissCinematic() {
-            gameplayScreen.style.display = 'none'; 
+            gameplayScreen.style.display = 'none';
             flash.classList.add('active');
             setTimeout(() => flash.classList.remove('active'), 200);
-
             cinematicKissContainer.style.display = 'flex';
             setTimeout(() => { cinematicKissContainer.style.opacity = '1'; }, 50);
-
-            /* 2️⃣ تعديل طلبك الثاني: حذف إيموجي الهدية من زر استلام الهدية */
             kissActionBox.innerHTML = "";
             const winBtn = document.createElement('button');
             winBtn.className = "option-button";
@@ -1450,7 +1039,7 @@ happy birthday</p>
             winBtn.innerText = "استلام الهدية";
             winBtn.addEventListener('click', () => {
                 cinematicKissContainer.style.opacity = '0';
-                cinematicKissContainer.style.display = 'none';
+                setTimeout(() => { cinematicKissContainer.style.display = 'none'; }, 300);
                 triggerGoodEnding();
             });
             kissActionBox.appendChild(winBtn);
@@ -1474,15 +1063,16 @@ happy birthday</p>
         function triggerGoodEnding() {
             endingScreen.style.display = 'flex';
             prankActive = true;
-
             setTimeout(() => {
                 prankActive = false;
-                yesBtn.style.position = 'relative';
-                yesBtn.style.left = 'auto';
-                yesBtn.style.top = 'auto';
-                noBtn.style.position = 'relative';
-                noBtn.style.right = 'auto';
-                noBtn.style.top = 'auto';
+                yesBtn.style.position = 'absolute';
+                yesBtn.style.left = '30px';
+                yesBtn.style.top  = '50%';
+                yesBtn.style.transform = 'translateY(-50%)';
+                noBtn.style.position  = 'absolute';
+                noBtn.style.right = '30px';
+                noBtn.style.top   = '50%';
+                noBtn.style.transform = 'translateY(-50%)';
                 prankTitle.innerText = "hehe im just messing around >-<";
             }, prankDuration);
         }
@@ -1490,34 +1080,21 @@ happy birthday</p>
         function moveButtonRandomly() {
             if (!prankActive) return;
             const container = document.querySelector('.prank-btn-container');
-            const cWidth = container.clientWidth;
-            const cHeight = container.clientHeight;
-
-            const randomX = Math.floor(Math.random() * (cWidth - 110)) + 5;
-            const randomY = Math.floor(Math.random() * (cHeight - 50)) + 5;
-
-            yesBtn.style.left = randomX + "px";
-            yesBtn.style.top = randomY + "px";
+            const cW = container.clientWidth;
+            const cH = container.clientHeight;
+            const btnW = yesBtn.offsetWidth;
+            const btnH = yesBtn.offsetHeight;
+            const rx = Math.floor(Math.random() * (cW - btnW - 10)) + 5;
+            const ry = Math.floor(Math.random() * (cH - btnH - 10)) + 5;
+            yesBtn.style.left = rx + "px";
+            yesBtn.style.top  = ry + "px";
+            yesBtn.style.transform = "none";
         }
 
-        yesBtn.addEventListener('mouseenter', () => {
-            if (prankActive) moveButtonRandomly();
-        });
-
-        yesBtn.addEventListener('touchstart', (e) => {
-            if (prankActive) {
-                e.preventDefault(); 
-                moveButtonRandomly();
-            }
-        });
-
-        noBtn.addEventListener('mouseenter', () => {
-            if (!prankActive) return;
-            noBtn.style.transform = "translateX(" + (Math.random() > 0.5 ? 15 : -15) + "px)";
-        });
-        noBtn.addEventListener('mouseleave', () => {
-            noBtn.style.transform = "translateX(0px)";
-        });
+        yesBtn.addEventListener('mouseenter', () => { if (prankActive) moveButtonRandomly(); });
+        yesBtn.addEventListener('touchstart', (e) => { if (prankActive) { e.preventDefault(); moveButtonRandomly(); } });
+        noBtn.addEventListener('mouseenter', () => { if (!prankActive) return; noBtn.style.transform = "translateX("+(Math.random()>0.5?15:-15)+"px)"; });
+        noBtn.addEventListener('mouseleave', () => { noBtn.style.transform = "translateY(-50%)"; });
         noBtn.addEventListener('click', (e) => { e.preventDefault(); });
 
         yesBtn.addEventListener('click', () => {
@@ -1529,9 +1106,7 @@ happy birthday</p>
 
         enterBtn.addEventListener('click', initCutscene);
         window.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && mainMenu.style.display !== 'none') {
-                initCutscene();
-            }
+            if (e.key === 'Enter' && mainMenu.style.display !== 'none') initCutscene();
         });
     </script>
 </body>
