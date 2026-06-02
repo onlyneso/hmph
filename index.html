@@ -33,7 +33,6 @@
             font-family: 'Press Start 2P', monospace;
         }
 
-        /* ══ MAIN MENU ══ */
         .main-menu {
             position: absolute;
             width: 100%;
@@ -82,10 +81,7 @@
         .menu-container::after  { bottom: 12px; right: 14px; animation-delay: 0.7s; }
         @keyframes twinkle { 0%{opacity:0.3;transform:scale(0.8);} 100%{opacity:1;transform:scale(1.1);} }
 
-        .pixel-logo {
-            display: flex;
-            gap: 5px;
-        }
+        .pixel-logo { display: flex; gap: 5px; }
         .pixel-heart {
             width: 12px; height: 12px;
             background: #ff608d;
@@ -258,9 +254,10 @@
             z-index: 20;
             display: none;
             flex-direction: column;
-            justify-content: space-between;
+            /* الشخصيات وصندوق الكلام يكونون في الأسفل مع بعض */
+            justify-content: flex-end;
             align-items: center;
-            padding: clamp(8px, 1.5vh, 20px) clamp(10px, 2vw, 20px) clamp(12px, 2.5vh, 30px);
+            padding: 0 clamp(10px, 2vw, 20px) clamp(14px, 2.5vh, 24px);
         }
         .gameplay-screen::before {
             content: "";
@@ -273,7 +270,7 @@
             z-index: 1;
         }
 
-        /* الشخصيات أقرب لبعض */
+        /* الشخصيات — بلا مسافة سفلية كبيرة */
         .stage-area {
             flex-shrink: 0;
             width: 70%;
@@ -281,7 +278,8 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding-bottom: clamp(6px, 1.5vh, 16px);
+            /* مسافة صغيرة بين الشخصيات وصندوق الحوار */
+            margin-bottom: 0;
             z-index: 2;
         }
 
@@ -318,7 +316,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(6px, 1.2vh, 12px);
+            gap: clamp(4px, 0.8vh, 8px);
             opacity: 0.5;
             transform: scale(0.9);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -491,42 +489,32 @@
             z-index: 40;
         }
 
-        /* ══ FINAL LETTER — pixel notebook style ══ */
         .final-letter-card {
             max-width: min(580px, 92%);
             width: 100%;
             max-height: 78vh;
             overflow-y: auto;
-            /* ورقة نوت بتصميم بكسل */
             background: #fffef8;
-            background-image:
-                linear-gradient(transparent calc(100% - 1px), #ffd6e5 1px);
+            background-image: linear-gradient(transparent calc(100% - 1px), #ffd6e5 1px);
             background-size: 100% 36px;
             border: none;
             border-left: 5px solid #ff9ebb;
             border-radius: 4px 16px 16px 4px;
             padding: clamp(18px, 3.5vw, 32px) clamp(18px, 4vw, 36px) clamp(18px, 3.5vw, 32px) clamp(22px, 4.5vw, 40px);
-            box-shadow: 4px 0 0 #ff7da1 inset,
-                        8px 8px 0 #ffc8da,
-                        12px 12px 0 #ffe0ed;
+            box-shadow: 4px 0 0 #ff7da1 inset, 8px 8px 0 #ffc8da, 12px 12px 0 #ffe0ed;
             display: none;
             flex-direction: column;
             gap: 14px;
             position: relative;
             animation: popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
         }
-        /* ثقوب الملزمة */
         .final-letter-card::before {
             content: "";
             position: absolute;
             left: -3px;
             top: 0; bottom: 0;
             width: 2px;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px, transparent 28px,
-                #ff9ebb 28px, #ff9ebb 42px
-            );
+            background: repeating-linear-gradient(to bottom, transparent 0px, transparent 28px, #ff9ebb 28px, #ff9ebb 42px);
         }
         @keyframes popIn { 0%{transform:scale(0.85) rotate(-1deg);opacity:0;} 100%{transform:scale(1) rotate(0deg);opacity:1;} }
 
