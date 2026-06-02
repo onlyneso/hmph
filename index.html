@@ -542,7 +542,6 @@
 
     <div class="flash-overlay" id="flash"></div>
 
-    <!-- ══ MAIN MENU ══ -->
     <div class="main-menu" id="mainMenu">
         <div class="menu-container">
             <div class="pixel-logo">
@@ -552,7 +551,7 @@
             </div>
             <h1 class="title">HMPH<br>SIMULATOR</h1>
             <p class="subtitle">A GAME BY NESO</p>
-            <div class="pixel-divider"><span>♥</span></div>
+            <div class="pixel-divider"><span>♥️</span></div>
             <button class="press-enter-btn" id="enterBtn">
                 <span class="btn-heart">❤</span>
                 PRESS ENTER
@@ -561,7 +560,6 @@
         </div>
     </div>
 
-    <!-- ══ CUTSCENE ══ -->
     <div class="cutscene-overlay" id="cutsceneLayer">
         <p class="cutscene-text" id="storyText"></p>
         <div class="telegram-chat" id="telegramChat">
@@ -572,13 +570,11 @@
         <h1 class="animal-title" id="animalText">هو الحيوان !!!</h1>
     </div>
 
-    <!-- ══ CINEMATIC KISS ══ -->
     <div class="cinematic-kiss-container" id="cinematicKissContainer">
         <img src="us_kissing.png" alt="Cinematic Kiss">
         <div class="kiss-action-container" id="kissActionBox"></div>
     </div>
 
-    <!-- ══ GAMEPLAY ══ -->
     <div class="gameplay-screen" id="gameplayScreen">
         <div class="stage-area" id="stageArea">
             <div class="avatar-box him" id="avatarHim">
@@ -600,7 +596,6 @@
         </div>
     </div>
 
-    <!-- ══ GAME OVER ══ -->
     <div class="game-over-screen" id="gameOverScreen">
         <h1 class="game-over-title" id="gameOverMsg">ياكلب حتى لو لعبه ماتضربني</h1>
         <p class="game-over-sub">GAME OVER</p>
@@ -608,7 +603,6 @@
         <button class="retry-button" id="retryBtn">checkpoint</button>
     </div>
 
-    <!-- ══ ENDING ══ -->
     <div class="ending-screen" id="endingScreen">
         <div id="prankSection" style="text-align:center;display:flex;flex-direction:column;align-items:center;width:100%;gap:18px;">
             <h1 class="prank-title" id="prankTitle">جاهز تستلم هديتك؟</h1>
@@ -754,7 +748,7 @@ happy birthday ♡</p>
                 {text:"B) زعلتك بشي انا؟",next:"node_2B1"},
                 {text:"C) ياخي نكد انتي كل يومين زعلانه",next:"node_2C1"}
             ]},
-            node_2A1:{speaker:"him",mood:"😐",text:"عشاني ما رديت عليك؟",options:[{text:"التالي",next:"node_2A2"}]},
+            node_2A1:{speaker:"him",mood:"😐",text:"عشاني ما رديت عليك？",options:[{text:"التالي",next:"node_2A2"}]},
             node_2A2:{speaker:"me",mood:"😐",text:"وش رايك يعني.",options:[{text:"التالي",next:"node_2A3"}]},
             node_2A3:{speaker:"him",mood:"😐",text:"كنت أذاكر وما قدرت أرد… آسف",options:[{text:"التالي",next:"node_transition"}]},
             node_2B1:{speaker:"him",mood:"😐",text:"زعلتك بشي انا؟",options:[{text:"التالي",next:"node_2B2"}]},
@@ -781,7 +775,7 @@ happy birthday ♡</p>
             node_3C1:{speaker:"him",mood:"😐",text:"أحس مكبرة الموضوع شوي",options:[{text:"التالي",next:"node_3C2"}]},
             node_3C2:{speaker:"😒",text:"على زق",options:[{text:"التالي",next:"node_3C3"}]},
             node_3C3:{speaker:"him",mood:"😐",text:"اطقطق ..",options:[{text:"التالي",next:"node_final_pre"}]},
-            node_3D1:{speaker:"him",mood:"😐",text:"آسف… ما انتبهت للجوال",options:[{text:"التالي",next:"node_3D2"}]},
+            node_3D1:{speaker:"him",mood:"😐",text:"آسف… ما انتبهت للجوال",options:[{text:"التالي",next:"node_3D1"}]},
             node_3D2:{speaker:"me",mood:"😐",text:"يب ماراح تنتبه لان ماعندك حس مسؤوليه ان فيه احد قاعد ينتظرك. توقعت اني اولويه بالنسبه لك",options:[{text:"التالي",next:"node_3D3"}]},
             node_3D3:{speaker:"him",mood:"😐",text:"مو قصدي أزعلك ياقلبي, علميني كيف اصلح الموقف",options:[{text:"التالي",next:"node_3D4"}]},
             node_3D4:{speaker:"me",mood:"😐",text:"مدري عنك",options:[{text:"التالي",next:"node_final_pre"}]},
@@ -800,7 +794,7 @@ happy birthday ♡</p>
             node_4C1:{speaker:"him",mood:"😐",text:"مو قصدي أتجاهلك",options:[{text:"التالي",next:"node_4C2"}]},
             node_4C2:{speaker:"me",mood:"😐",text:"بس تجاهلتني",options:[{text:"التالي",next:"node_4C3"}]},
             node_4C3:{speaker:"him",mood:"😐",text:"ماكان عندي مكان اتكلم فيه",options:[{text:"التالي",next:"node_pre_boss"}]},
-            node_4D1:{speaker:"him",mood:"😐",text:"اوكي زعلانه بس ماتوصل يعني",options:[{text:"التالي",next:"node_4D2"}]},
+            node_4D1:{speaker:"him",mood:"😐",text:" اوكي زعلانه بس ماتوصل يعني",options:[{text:"التالي",next:"node_4D2"}]},
             node_4D2:{speaker:"me",mood:"😒",text:"الا توصل",options:[{text:"التالي",next:"node_4D3"}]},
             node_4D3:{speaker:"him",mood:"😐",text:"خلاص فهمنا",options:[{text:"التالي",next:"node_pre_boss"}]},
             node_pre_boss:{speaker:"him",mood:"😐",text:"طيب خلاص لا تزعلين…\nترى كنت أذاكر والله عشان ابني مستقبلنا",options:[{text:"التالي",next:"node_pre_boss2"}]},
