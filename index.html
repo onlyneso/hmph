@@ -254,7 +254,6 @@
             z-index: 20;
             display: none;
             flex-direction: column;
-            /* الشخصيات وصندوق الكلام يكونون في الأسفل مع بعض */
             justify-content: flex-end;
             align-items: center;
             padding: 0 clamp(10px, 2vw, 20px) clamp(20px, 4vh, 30px);
@@ -270,7 +269,6 @@
             z-index: 1;
         }
 
-        /* الشخصيات — بلا مسافة سفلية كبيرة */
         .stage-area {
             flex-shrink: 0;
             width: 70%;
@@ -278,7 +276,6 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            /* مسافة صغيرة بين الشخصيات وصندوق الحوار */
             margin-bottom: 0;
             z-index: 2;
         }
@@ -773,9 +770,9 @@ happy birthday ♡</p>
             node_3B2:{speaker:"me",mood:"😐",text:"ليش اتكلم والموضوع واضح؟؟",options:[{text:"التالي",next:"node_3B3"}]},
             node_3B3:{speaker:"him",mood:"😐",text:"لا لازم أفهم انا عشان أصلح مابقرا افكارك يا نيسو",options:[{text:"التالي",next:"node_final_pre"}]},
             node_3C1:{speaker:"him",mood:"😐",text:"أحس مكبرة الموضوع شوي",options:[{text:"التالي",next:"node_3C2"}]},
-            node_3C2:{speaker:"😒",text:"على زق",options:[{text:"التالي",next:"node_3C3"}]},
+            node_3C2:{speaker:"me",mood:"😒",text:"على زق",options:[{text:"التالي",next:"node_3C3"}]},
             node_3C3:{speaker:"him",mood:"😐",text:"اطقطق ..",options:[{text:"التالي",next:"node_final_pre"}]},
-            node_3D1:{speaker:"him",mood:"😐",text:"آسف… ما انتبهت للجوال",options:[{text:"التالي",next:"node_3D1"}]},
+            node_3D1:{speaker:"him",mood:"😐",text:"آسف… ما انتبهت للجوال",options:[{text:"التالي",next:"node_3D2"}]},
             node_3D2:{speaker:"me",mood:"😐",text:"يب ماراح تنتبه لان ماعندك حس مسؤوليه ان فيه احد قاعد ينتظرك. توقعت اني اولويه بالنسبه لك",options:[{text:"التالي",next:"node_3D3"}]},
             node_3D3:{speaker:"him",mood:"😐",text:"مو قصدي أزعلك ياقلبي, علميني كيف اصلح الموقف",options:[{text:"التالي",next:"node_3D4"}]},
             node_3D4:{speaker:"me",mood:"😐",text:"مدري عنك",options:[{text:"التالي",next:"node_final_pre"}]},
@@ -973,7 +970,7 @@ happy birthday ♡</p>
 
         yesBtn.addEventListener('mouseenter', () => { if (prankActive) moveButtonRandomly(); });
         yesBtn.addEventListener('touchstart', (e) => { if (prankActive) { e.preventDefault(); moveButtonRandomly(); } });
-        noBtn.addEventListener('mouseenter', () => { if (!prankActive) return; noBtn.style.transform = "translateX("+(Math.random()>0.5?15:-15)+"px)"; });
+        noBtn.addEventListener('mouseenter', () => { if (!prankActive) return; noBtn.style.transform = "translateY(-50%) translateX("+(Math.random()>0.5?15:-15)+"px)"; });
         noBtn.addEventListener('mouseleave', () => { noBtn.style.transform = "translateY(-50%)"; });
         noBtn.addEventListener('click', (e) => { e.preventDefault(); });
         yesBtn.addEventListener('click', () => {
