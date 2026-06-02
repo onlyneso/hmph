@@ -271,12 +271,11 @@
 
         .stage-area {
             flex-shrink: 0;
-            width: 70%;
-            max-width: 600px;
+            width: clamp(75%, 85%, 600px);
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 0;
+            margin-bottom: clamp(16px, 3.5vh, 28px);
             z-index: 2;
         }
 
