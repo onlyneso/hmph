@@ -254,9 +254,9 @@
             z-index: 20;
             display: none;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center; /* تم التعديل هنا ليتوسط عمودياً بالكامل */
             align-items: center;
-            padding: 0 clamp(10px, 2vw, 20px) clamp(20px, 4vh, 30px);
+            padding: clamp(20px, 4vh, 30px) clamp(10px, 2vw, 20px); /* تم موازنة المسافات العلوية والسفلية */
         }
         .gameplay-screen::before {
             content: "";
